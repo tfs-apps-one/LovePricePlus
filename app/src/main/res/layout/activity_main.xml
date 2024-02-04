@@ -63,6 +63,7 @@
                         android:layout_weight="1"
                         android:background="@drawable/bak_btn_1"
                         app:backgroundTint="@null"
+                        android:onClick="onPrice_a"
                         tools:ignore="SpeakableTextPresentCheck,TouchTargetSizeCheck" />
 
                     <Button
@@ -76,6 +77,7 @@
                         android:layout_weight="1"
                         android:background="@drawable/bak_btn_1"
                         app:backgroundTint="@null"
+                        android:onClick="onAmount_a"
                         tools:ignore="TouchTargetSizeCheck,SpeakableTextPresentCheck" />
 
                     <Button
@@ -89,6 +91,7 @@
                         android:layout_weight="1"
                         android:background="@drawable/bak_btn_1"
                         app:backgroundTint="@null"
+                        android:onClick="onSet_a"
                         tools:ignore="SpeakableTextPresentCheck,TouchTargetSizeCheck" />
 
                     <Button
@@ -102,6 +105,7 @@
                         android:layout_weight="1"
                         android:background="@drawable/bak_btn_1"
                         app:backgroundTint="@null"
+                        android:onClick="onPoint_a"
                         tools:ignore="SpeakableTextPresentCheck,TouchTargetSizeCheck" />
 
                     <Button
@@ -116,6 +120,7 @@
                         android:background="@drawable/bak_btn_3"
                         android:gravity="center|center"
                         android:text="リセット"
+                        android:onClick="onReset_a"
                         android:textStyle="bold"
                         app:backgroundTint="@null"
                         tools:ignore="TouchTargetSizeCheck" />
@@ -138,6 +143,8 @@
                         android:layout_weight="1"
                         app:backgroundTint="@null"
                         android:text=""
+                        android:textStyle="bold"
+                        android:gravity="center|center"
                         />
 
                     <TextView
@@ -248,6 +255,7 @@
                         android:layout_weight="1"
                         android:background="@drawable/bak_btn_1"
                         app:backgroundTint="@null"
+                        android:onClick="onPrice_b"
                         tools:ignore="SpeakableTextPresentCheck,TouchTargetSizeCheck" />
 
                     <Button
@@ -261,6 +269,7 @@
                         android:layout_weight="1"
                         android:background="@drawable/bak_btn_1"
                         app:backgroundTint="@null"
+                        android:onClick="onAmount_b"
                         tools:ignore="SpeakableTextPresentCheck,TouchTargetSizeCheck" />
 
                     <Button
@@ -274,6 +283,7 @@
                         android:layout_weight="1"
                         android:background="@drawable/bak_btn_1"
                         app:backgroundTint="@null"
+                        android:onClick="onSet_b"
                         tools:ignore="SpeakableTextPresentCheck,TouchTargetSizeCheck" />
 
                     <Button
@@ -287,6 +297,7 @@
                         android:layout_weight="1"
                         android:background="@drawable/bak_btn_1"
                         app:backgroundTint="@null"
+                        android:onClick="onPoint_b"
                         tools:ignore="SpeakableTextPresentCheck,TouchTargetSizeCheck" />
 
                     <Button
@@ -301,6 +312,7 @@
                         android:background="@drawable/bak_btn_3"
                         android:gravity="center|center"
                         android:text="リセット"
+                        android:onClick="onReset_b"
                         android:textStyle="bold"
                         app:backgroundTint="@null"
                         tools:ignore="TouchTargetSizeCheck" />
@@ -350,6 +362,7 @@
                         android:layout_weight="1"
                         android:gravity="center|center"
                         android:text="７"
+                        android:onClick="onNum7"
                         android:textStyle="bold"
                         android:background="@drawable/bak_btn_4"
                         app:backgroundTint="@null"
@@ -366,6 +379,7 @@
                         android:layout_weight="1"
                         android:gravity="center|center"
                         android:text="８"
+                        android:onClick="onNum8"
                         android:textStyle="bold"
                         android:background="@drawable/bak_btn_4"
                         app:backgroundTint="@null"
@@ -381,6 +395,7 @@
                         android:layout_marginBottom="5dp"
                         android:layout_weight="1"
                         android:text="９"
+                        android:onClick="onNum9"
                         android:textStyle="bold"
                         android:background="@drawable/bak_btn_4"
                         app:backgroundTint="@null"
@@ -396,6 +411,7 @@
                         android:layout_marginBottom="5dp"
                         android:layout_weight="1"
                         android:text="履歴"
+                        android:onClick="onHistory"
                         android:textStyle="bold"
                         android:background="@drawable/bak_btn_4"
                         app:backgroundTint="@null"
@@ -423,6 +439,7 @@
                         android:layout_weight="1"
                         android:gravity="center|center"
                         android:text="４"
+                        android:onClick="onNum4"
                         android:textStyle="bold"
                         android:background="@drawable/bak_btn_4"
                         app:backgroundTint="@null"
@@ -439,6 +456,7 @@
                         android:layout_weight="1"
                         android:gravity="center|center"
                         android:text="５"
+                        android:onClick="onNum5"
                         android:textStyle="bold"
                         android:background="@drawable/bak_btn_4"
                         app:backgroundTint="@null"
@@ -454,6 +472,7 @@
                         android:layout_marginBottom="5dp"
                         android:layout_weight="1"
                         android:text="６"
+                        android:onClick="onNum6"
                         android:textStyle="bold"
                         android:background="@drawable/bak_btn_4"
                         app:backgroundTint="@null"
@@ -469,6 +488,7 @@
                         android:layout_marginBottom="5dp"
                         android:layout_weight="1"
                         android:text="前へ"
+                        android:onClick="onNumBefore"
                         android:textStyle="bold"
                         android:background="@drawable/bak_btn_4"
                         app:backgroundTint="@null"
@@ -496,6 +516,7 @@
                         android:layout_weight="1"
                         android:gravity="center|center"
                         android:text="１"
+                        android:onClick="onNum1"
                         android:textStyle="bold"
                         android:background="@drawable/bak_btn_4"
                         app:backgroundTint="@null"
@@ -512,6 +533,7 @@
                         android:layout_weight="1"
                         android:gravity="center|center"
                         android:text="２"
+                        android:onClick="onNum2"
                         android:textStyle="bold"
                         android:background="@drawable/bak_btn_4"
                         app:backgroundTint="@null"
@@ -527,6 +549,7 @@
                         android:layout_marginBottom="5dp"
                         android:layout_weight="1"
                         android:text="３"
+                        android:onClick="onNum3"
                         android:textStyle="bold"
                         android:background="@drawable/bak_btn_4"
                         app:backgroundTint="@null"
@@ -542,6 +565,7 @@
                         android:layout_marginBottom="5dp"
                         android:layout_weight="1"
                         android:text="次へ"
+                        android:onClick="onNumNext"
                         android:textStyle="bold"
                         android:background="@drawable/bak_btn_4"
                         app:backgroundTint="@null"
@@ -569,6 +593,7 @@
                         android:layout_weight="1"
                         android:gravity="center|center"
                         android:text="００"
+                        android:onClick="onNum00"
                         android:textStyle="bold"
                         android:background="@drawable/bak_btn_4"
                         app:backgroundTint="@null"
@@ -585,6 +610,7 @@
                         android:layout_weight="1"
                         android:gravity="center|center"
                         android:text="０"
+                        android:onClick="onNum0"
                         android:textStyle="bold"
                         android:background="@drawable/bak_btn_4"
                         app:backgroundTint="@null"
@@ -600,6 +626,7 @@
                         android:layout_marginBottom="5dp"
                         android:layout_weight="1"
                         android:text="．"
+                        android:onClick="onNumDot"
                         android:textStyle="bold"
                         android:background="@drawable/bak_btn_4"
                         app:backgroundTint="@null"
@@ -615,6 +642,7 @@
                         android:layout_marginBottom="5dp"
                         android:layout_weight="1"
                         android:text="削除"
+                        android:onClick="onNumDelete"
                         android:textStyle="bold"
                         android:background="@drawable/bak_btn_4"
                         app:backgroundTint="@null"
