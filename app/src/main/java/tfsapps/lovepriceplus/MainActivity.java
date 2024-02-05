@@ -37,6 +37,9 @@ public class MainActivity extends AppCompatActivity {
     private Button btn_point_a;
     private Button btn_point_b;
 
+    private double unit_A = 0;
+    private double unit_B = 0;
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -46,9 +49,96 @@ public class MainActivity extends AppCompatActivity {
     }
 
     /**************************************************
+     * 金額計算処理
+     *  false:計算できない     true:計算結果あり
+     *************************************************/
+    public boolean Calculate() {
+        double pri_a = 0;
+        double pri_b = 0;
+        int amount_a = 0;
+        int amount_b = 0;
+        int set_a = 0;
+        int set_b = 0;
+        int point_a = 0;
+        int point_b = 0;
+        double temp_a = 0;
+        double temp_b = 0;
+
+        //データ変換
+        if (db_price_a.isEmpty() == false) {
+            pri_a = Double.parseDouble(db_price_a);
+        }
+        if (db_price_b.isEmpty() == false) {
+            pri_b = Double.parseDouble(db_price_b);
+        }
+        if (db_amount_a.isEmpty() == false) {
+            amount_a = Integer.parseInt(db_amount_a);
+        }
+        if (db_amount_b.isEmpty() == false) {
+            amount_b = Integer.parseInt(db_amount_b);
+        }
+        if (db_set_a.isEmpty() == false) {
+            set_a = Integer.parseInt(db_set_a);
+        }
+        if (db_set_b.isEmpty() == false) {
+            set_b = Integer.parseInt(db_set_b);
+        }
+        if (db_point_a.isEmpty() == false) {
+            point_a = Integer.parseInt(db_point_a);
+        }
+        if (db_point_b.isEmpty() == false) {
+            point_b = Integer.parseInt(db_point_b);
+        }
+
+        //必須項目の入力チェック
+        if (pri_a <= 0 || (set_a <= 0 && amount_a <=0) || pri_b <= 0 || (set_b <= 0 && amount_b <= 0)) {
+            return false;
+        }
+
+
+        //１個当たりの金額
+        if (temp_a <= 0 || temp_b <= 0) {
+            return false;
+        }
+        if (set_a > 0) {
+            temp_a = (temp_a / set_a);
+        }
+        if (set_b > 0) {
+            temp_b = (temp_b / set_b);
+        }
+        //１容量当たりの金額
+        if (temp_a <= 0 || temp_b <= 0) {
+            return false;
+        }
+        if (amount_a > 0) {
+            temp_a = (temp_a / amount_a);
+        }
+        if (amount_b > 0) {
+            temp_b = (temp_b / amount_b);
+        }
+
+        //ポイント単価をやめる
+        if (point_a > 0) {
+            unit_A = temp_a - point_a;
+        }
+        else{
+            unit_A = temp_a;
+        }
+        if (point_b > 0) {
+            unit_B = temp_b - point_b;
+        }
+        else {
+            unit_B = temp_b;
+        }
+
+        return true;
+    }
+
+    /**************************************************
      * 画面表示更新
      *
      *************************************************/
+    //画面表示パーツの共通メモリへのロード処理
     public void DisplayScreenLoad() {
         btn_pri_a = findViewById(R.id.btn_price_a);
         btn_pri_b = findViewById(R.id.btn_price_b);
@@ -59,13 +149,12 @@ public class MainActivity extends AppCompatActivity {
         btn_point_a = findViewById(R.id.btn_point_a);
         btn_point_b = findViewById(R.id.btn_point_b);
     }
-
+    //画面表示処理
     public void DisplayScreen() {
         int select_color = R.drawable.bak_btn_2;
         int no_select_color = R.drawable.bak_btn_1;
         String input_tmp = "";
-
-        //カーソル表示
+    //カーソル表示
         btn_pri_a.setBackgroundTintList(null);
         btn_pri_a.setBackgroundResource(no_select_color);
         btn_pri_b.setBackgroundTintList(null);
@@ -113,7 +202,7 @@ public class MainActivity extends AppCompatActivity {
                                 break;
         }
 
-        //文字入力
+    //文字入力
         btn_pri_a.setText(db_price_a);
         btn_pri_b.setText(db_price_b);
         btn_amount_a.setText(db_amount_a);
@@ -127,6 +216,7 @@ public class MainActivity extends AppCompatActivity {
      * データ入力処理
      *
      *************************************************/
+    //データ数値の入力処理
     public void NumDataInput() {
 
         switch (now_cursor){
@@ -150,6 +240,7 @@ public class MainActivity extends AppCompatActivity {
 //        StringUtils.chop(str);
         DisplayScreen();
     }
+    //Delete処理
     public void NumDataDelete() {
         int len = 0;
         String tmp = "";
@@ -250,9 +341,6 @@ public class MainActivity extends AppCompatActivity {
         }
         //入力値のデータセット
         //計算処理
-
-    }
-    public void Calculate() {
 
     }
 
