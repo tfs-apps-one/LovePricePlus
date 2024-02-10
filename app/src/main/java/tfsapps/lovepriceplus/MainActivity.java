@@ -5,6 +5,7 @@ import androidx.appcompat.app.AppCompatActivity;
 import android.os.Bundle;
 import android.view.View;
 import android.widget.Button;
+import android.widget.TextView;
 
 public class MainActivity extends AppCompatActivity {
 
@@ -27,6 +28,10 @@ public class MainActivity extends AppCompatActivity {
     final int CR_SET_B = 5;
     final int CR_POINT_A = 6;
     final int CR_POINT_B = 7;
+
+    private TextView txt_item_a;
+    private TextView txt_item_b;
+    private TextView txt_item_title;
 
     private Button btn_pri_a;
     private Button btn_pri_b;
@@ -95,6 +100,8 @@ public class MainActivity extends AppCompatActivity {
             return false;
         }
 
+        temp_a = pri_a;
+        temp_b = pri_b;
 
         //１個当たりの金額
         if (temp_a <= 0 || temp_b <= 0) {
@@ -139,7 +146,36 @@ public class MainActivity extends AppCompatActivity {
      *
      *************************************************/
     //画面表示パーツの共通メモリへのロード処理
+    public void DisplayCalculateResult() {
+
+        String temp_a = "";
+        String temp_b = "";
+
+        if (Calculate()){
+            temp_a = String.format("%.4f", unit_A);
+            temp_b = String.format("%.4f", unit_B);
+
+            txt_item_a.setText(temp_a);
+            txt_item_b.setText(temp_b);
+
+            if (unit_A > unit_B){
+                txt_item_title.setText("Bがお得");
+            }
+            else if (unit_A < unit_B){
+                txt_item_title.setText("Ａがお得");
+            }
+            else{
+                txt_item_title.setText("同じ");
+            }
+        }
+    }
+
+    //画面表示パーツの共通メモリへのロード処理
     public void DisplayScreenLoad() {
+        txt_item_a = findViewById(R.id.text_item_a);
+        txt_item_b = findViewById(R.id.text_item_b);
+        txt_item_title = findViewById(R.id.text_item_title);
+
         btn_pri_a = findViewById(R.id.btn_price_a);
         btn_pri_b = findViewById(R.id.btn_price_b);
         btn_amount_a = findViewById(R.id.btn_amount_a);
@@ -220,25 +256,64 @@ public class MainActivity extends AppCompatActivity {
     public void NumDataInput() {
 
         switch (now_cursor){
-            case CR_PRI_A:      db_price_a += input_data;
+            case CR_PRI_A:
+                if (input_data == "." && db_price_a.contains(".")) {
+                    return;
+                }
+                db_price_a += input_data;
                 break;
-            case CR_PRI_B:      db_price_b += input_data;
+            case CR_PRI_B:
+                if (input_data == "." && db_price_b.contains(".")) {
+                    return;
+                }
+                db_price_b += input_data;
                 break;
-            case CR_AMOUNT_A:   db_amount_a += input_data;
+
+            case CR_AMOUNT_A:
+                if (input_data == "." && db_amount_a.contains(".")) {
+                    return;
+                }
+                db_amount_a += input_data;
                 break;
-            case CR_AMOUNT_B:   db_amount_b += input_data;
+
+            case CR_AMOUNT_B:
+                if (input_data == "." && db_amount_b.contains(".")) {
+                    return;
+                }
+                db_amount_b += input_data;
                 break;
-            case CR_SET_A:      db_set_a += input_data;
+
+            case CR_SET_A:
+                if (input_data == "." && db_set_a.contains(".")) {
+                    return;
+                }
+                db_set_a += input_data;
                 break;
-            case CR_SET_B:      db_set_b += input_data;
+
+            case CR_SET_B:
+                if (input_data == "." && db_set_b.contains(".")) {
+                    return;
+                }
+                db_set_b += input_data;
                 break;
-            case CR_POINT_A:    db_point_a += input_data;
+
+            case CR_POINT_A:
+                if (input_data == "." && db_point_a.contains(".")) {
+                    return;
+                }
+                db_point_a += input_data;
                 break;
-            case CR_POINT_B:    db_point_b += input_data;
+
+            case CR_POINT_B:
+                if (input_data == "." && db_point_b.contains(".")) {
+                    return;
+                }
+                db_point_b += input_data;
                 break;
         }
 //        StringUtils.chop(str);
         DisplayScreen();
+        DisplayCalculateResult();
     }
     //Delete処理
     public void NumDataDelete() {
@@ -296,6 +371,7 @@ public class MainActivity extends AppCompatActivity {
         }
 //        StringUtils.chop(str);
         DisplayScreen();
+        DisplayCalculateResult();
     }
 
     /**************************************************
@@ -381,11 +457,44 @@ public class MainActivity extends AppCompatActivity {
     }
 
     public void onReset_a(View v) {
+        db_price_a = "";
+        db_amount_a = "";
+        db_set_a = "";
+        db_point_a = "";
+        txt_item_a.setText("商品Ａ");
 
+        txt_item_title.setText("");
+        DisplayScreen();
+        DisplayCalculateResult();
     }
 
     public void onReset_b(View v) {
+        db_price_b = "";
+        db_amount_b = "";
+        db_set_b = "";
+        db_point_b = "";
+        txt_item_b.setText("商品Ｂ");
 
+        txt_item_title.setText("");
+        DisplayScreen();
+        DisplayCalculateResult();
+    }
+
+    public void onReset_All(View v) {
+        db_price_a = "";
+        db_amount_a = "";
+        db_set_a = "";
+        db_point_a = "";
+        txt_item_a.setText("商品Ａ");
+        db_price_b = "";
+        db_amount_b = "";
+        db_set_b = "";
+        db_point_b = "";
+        txt_item_b.setText("商品Ｂ");
+
+        txt_item_title.setText("");
+        DisplayScreen();
+        DisplayCalculateResult();
     }
 
     /**************************************************
@@ -449,7 +558,8 @@ public class MainActivity extends AppCompatActivity {
     }
 
     public void onNumDot(View v) {
-
+        input_data = ".";
+        NumDataInput();
     }
 
     public void onHistory(View v) {
