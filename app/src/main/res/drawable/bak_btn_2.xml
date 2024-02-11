@@ -12,10 +12,15 @@
         android:angle="90" />
         -->
     <corners android:radius="3dp"/>
+
+    <stroke
+        android:color="#FF9999EC"
+        android:width="3dp"/>
+    <!--
     <stroke
         android:color="#FFFC9999"
         android:width="2dp"/>
-
+        -->
     <gradient
         android:angle="270"
         android:startColor="#ffffffee"

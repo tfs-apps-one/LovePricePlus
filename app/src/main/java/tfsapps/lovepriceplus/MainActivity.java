@@ -7,6 +7,7 @@ import android.graphics.Typeface;
 import android.os.Bundle;
 import android.view.View;
 import android.widget.Button;
+import android.widget.LinearLayout;
 import android.widget.TextView;
 
 public class MainActivity extends AppCompatActivity {
@@ -157,6 +158,9 @@ public class MainActivity extends AppCompatActivity {
 
         String temp_a = "";
         String temp_b = "";
+        LinearLayout lay_item_a = (LinearLayout)findViewById(R.id.linearLayout_11_1);
+        LinearLayout lay_item_b = (LinearLayout)findViewById(R.id.linearLayout_11_3);
+
         int text_size = 16;
 
         if (Calculate()){
@@ -172,14 +176,26 @@ public class MainActivity extends AppCompatActivity {
             txt_item_b.setTextColor(Color.DKGRAY);
             txt_item_b.setTypeface(Typeface.DEFAULT_BOLD);
             txt_item_b.setTextSize(text_size);
+            lay_item_a.setBackgroundResource(R.drawable.bak_noselect);
+            lay_item_b.setBackgroundResource(R.drawable.bak_noselect);
+
 
             if (unit_A > unit_B){
                 txt_item_title.setText("Bがお得▶︎");
+                txt_item_title.setTextColor(Color.rgb(255,100,100));
+
+                txt_item_b.setTextColor(Color.rgb(255,100,100));
+                lay_item_b.setBackgroundResource(R.drawable.bak_select_box);
             }
             else if (unit_A < unit_B){
                 txt_item_title.setText("◀︎Ａがお得");
+                txt_item_title.setTextColor(Color.rgb(255,100,100));
+
+                txt_item_a.setTextColor(Color.rgb(255,100,100));
+                lay_item_a.setBackgroundResource(R.drawable.bak_select_box);
             }
             else{
+                txt_item_title.setTextColor(Color.DKGRAY);
                 txt_item_title.setText("＝同じ＝");
             }
         }
@@ -207,25 +223,61 @@ public class MainActivity extends AppCompatActivity {
     public void DisplayScreen() {
         int select_color = R.drawable.bak_btn_2;
         int no_select_color = R.drawable.bak_btn_1;
+
         String input_tmp = "";
         int text_size = 16;
+    //画面表示
+        TextView ttl_pri = findViewById(R.id.text_price_title);
+        ttl_pri.setTextColor(Color.GRAY);
+        ttl_pri.setTypeface(Typeface.DEFAULT_BOLD);
+        ttl_pri.setTextSize(text_size);
+
+        TextView ttl_amount = findViewById(R.id.text_amount_title);
+        ttl_amount.setTextColor(Color.GRAY);
+        ttl_amount.setTypeface(Typeface.DEFAULT_BOLD);
+        ttl_amount.setTextSize(text_size);
+
+        TextView ttl_set = findViewById(R.id.text_set_title);
+        ttl_set.setTextColor(Color.GRAY);
+        ttl_set.setTypeface(Typeface.DEFAULT_BOLD);
+        ttl_set.setTextSize(text_size);
+
+        TextView ttl_point = findViewById(R.id.text_point_title);
+        ttl_point.setTextColor(Color.GRAY);
+        ttl_point.setTypeface(Typeface.DEFAULT_BOLD);
+        ttl_point.setTextSize(text_size-1);
+
+        TextView ttl_item = findViewById(R.id.text_item_title);
+        ttl_item.setText("単価");
+        ttl_item.setTextColor(Color.GRAY);
+        ttl_item.setTypeface(Typeface.DEFAULT_BOLD);
+        ttl_item.setTextSize(text_size);
+
+        txt_item_a.setTextColor(Color.GRAY);
+        txt_item_a.setTypeface(Typeface.DEFAULT_BOLD);
+        txt_item_a.setTextSize(text_size);
+
+        txt_item_b.setTextColor(Color.GRAY);
+        txt_item_b.setTypeface(Typeface.DEFAULT_BOLD);
+        txt_item_b.setTextSize(text_size);
+
     //カーソル表示
         btn_reset_a.setBackgroundTintList(null);
         btn_reset_a.setBackgroundResource(R.drawable.bak_btn_5);
-        btn_reset_a.setTextSize(text_size);
-        btn_reset_a.setTextColor(Color.DKGRAY);
+        btn_reset_a.setTextSize(text_size-2);
+        btn_reset_a.setTextColor(Color.GRAY);
         btn_reset_a.setTypeface(Typeface.DEFAULT_BOLD);
 
         btn_reset_b.setBackgroundTintList(null);
         btn_reset_b.setBackgroundResource(R.drawable.bak_btn_5);
-        btn_reset_b.setTextSize(text_size);
-        btn_reset_b.setTextColor(Color.DKGRAY);
+        btn_reset_b.setTextSize(text_size-2);
+        btn_reset_b.setTextColor(Color.GRAY);
         btn_reset_b.setTypeface(Typeface.DEFAULT_BOLD);
 
         btn_reset_all.setBackgroundTintList(null);
         btn_reset_all.setBackgroundResource(R.drawable.bak_btn_5);
-        btn_reset_all.setTextSize(text_size);
-        btn_reset_all.setTextColor(Color.RED);
+        btn_reset_all.setTextSize(text_size-2);
+        btn_reset_all.setTextColor(Color.rgb(255, 140, 140));
         btn_reset_all.setTypeface(Typeface.DEFAULT_BOLD);
 
         btn_pri_a.setBackgroundTintList(null);
@@ -525,6 +577,11 @@ public class MainActivity extends AppCompatActivity {
     }
 
     public void onReset_a(View v) {
+        LinearLayout lay_item_a = (LinearLayout)findViewById(R.id.linearLayout_11_1);
+        LinearLayout lay_item_b = (LinearLayout)findViewById(R.id.linearLayout_11_3);
+        lay_item_a.setBackgroundResource(R.drawable.bak_noselect);
+        lay_item_b.setBackgroundResource(R.drawable.bak_noselect);
+
         db_price_a = "";
         db_amount_a = "";
         db_set_a = "";
@@ -537,6 +594,11 @@ public class MainActivity extends AppCompatActivity {
     }
 
     public void onReset_b(View v) {
+        LinearLayout lay_item_a = (LinearLayout)findViewById(R.id.linearLayout_11_1);
+        LinearLayout lay_item_b = (LinearLayout)findViewById(R.id.linearLayout_11_3);
+        lay_item_a.setBackgroundResource(R.drawable.bak_noselect);
+        lay_item_b.setBackgroundResource(R.drawable.bak_noselect);
+
         db_price_b = "";
         db_amount_b = "";
         db_set_b = "";
@@ -549,6 +611,11 @@ public class MainActivity extends AppCompatActivity {
     }
 
     public void onReset_All(View v) {
+        LinearLayout lay_item_a = (LinearLayout)findViewById(R.id.linearLayout_11_1);
+        LinearLayout lay_item_b = (LinearLayout)findViewById(R.id.linearLayout_11_3);
+        lay_item_a.setBackgroundResource(R.drawable.bak_noselect);
+        lay_item_b.setBackgroundResource(R.drawable.bak_noselect);
+
         db_price_a = "";
         db_amount_a = "";
         db_set_a = "";

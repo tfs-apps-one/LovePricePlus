@@ -236,7 +236,7 @@
                         android:layout_width="match_parent"
                         android:layout_height="0dp"
                         android:layout_marginStart="5dp"
-                        android:layout_marginTop="5dp"
+                        android:layout_marginTop="10dp"
                         android:layout_marginEnd="5dp"
                         android:layout_marginBottom="5dp"
                         android:layout_weight="1"
@@ -448,7 +448,7 @@
                         android:textStyle="bold"
                         android:background="@drawable/bak_btn_3"
                         app:backgroundTint="@null"
-                        android:textSize="16dp"
+                        android:textSize="18dp"
                         android:textColor="#555555"
                         tools:ignore="SpeakableTextPresentCheck,TouchTargetSizeCheck" />
 
@@ -637,7 +637,7 @@
                         android:layout_marginBottom="5dp"
                         android:layout_weight="1"
                         android:gravity="center|center"
-                        android:text="００"
+                        android:text="00"
                         android:onClick="onNum00"
                         android:textStyle="bold"
                         android:background="@drawable/bak_btn_7"
