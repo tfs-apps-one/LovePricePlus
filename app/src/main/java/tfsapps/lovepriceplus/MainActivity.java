@@ -2,6 +2,8 @@ package tfsapps.lovepriceplus;
 
 import androidx.appcompat.app.AppCompatActivity;
 
+import android.graphics.Color;
+import android.graphics.Typeface;
 import android.os.Bundle;
 import android.view.View;
 import android.widget.Button;
@@ -18,16 +20,17 @@ public class MainActivity extends AppCompatActivity {
     private String db_point_a = "";
     private String db_point_b = "";
     private String input_data = "";
-    private int now_cursor;
+    private int now_cursor = 1;
 
-    final int CR_PRI_A = 0;
-    final int CR_PRI_B = 1;
-    final int CR_AMOUNT_A = 2;
-    final int CR_AMOUNT_B = 3;
-    final int CR_SET_A = 4;
-    final int CR_SET_B = 5;
-    final int CR_POINT_A = 6;
-    final int CR_POINT_B = 7;
+    final int CR_INIT = 0;
+    final int CR_PRI_A = 1;
+    final int CR_PRI_B = 2;
+    final int CR_AMOUNT_A = 3;
+    final int CR_AMOUNT_B = 4;
+    final int CR_SET_A = 5;
+    final int CR_SET_B = 6;
+    final int CR_POINT_A = 7;
+    final int CR_POINT_B = 8;
 
     private TextView txt_item_a;
     private TextView txt_item_b;
@@ -41,6 +44,9 @@ public class MainActivity extends AppCompatActivity {
     private Button btn_set_b;
     private Button btn_point_a;
     private Button btn_point_b;
+    private Button btn_reset_a;
+    private Button btn_reset_b;
+    private Button btn_reset_all;
 
     private double unit_A = 0;
     private double unit_B = 0;
@@ -51,6 +57,7 @@ public class MainActivity extends AppCompatActivity {
         setContentView(R.layout.activity_main);
 
         DisplayScreenLoad();
+        DisplayScreen();
     }
 
     /**************************************************
@@ -60,10 +67,10 @@ public class MainActivity extends AppCompatActivity {
     public boolean Calculate() {
         double pri_a = 0;
         double pri_b = 0;
-        int amount_a = 0;
-        int amount_b = 0;
-        int set_a = 0;
-        int set_b = 0;
+        double amount_a = 0;
+        double amount_b = 0;
+        double set_a = 0;
+        double set_b = 0;
         int point_a = 0;
         int point_b = 0;
         double temp_a = 0;
@@ -77,16 +84,16 @@ public class MainActivity extends AppCompatActivity {
             pri_b = Double.parseDouble(db_price_b);
         }
         if (db_amount_a.isEmpty() == false) {
-            amount_a = Integer.parseInt(db_amount_a);
+            amount_a = Double.parseDouble(db_amount_a);
         }
         if (db_amount_b.isEmpty() == false) {
-            amount_b = Integer.parseInt(db_amount_b);
+            amount_b = Double.parseDouble(db_amount_b);
         }
         if (db_set_a.isEmpty() == false) {
-            set_a = Integer.parseInt(db_set_a);
+            set_a = Double.parseDouble(db_set_a);
         }
         if (db_set_b.isEmpty() == false) {
-            set_b = Integer.parseInt(db_set_b);
+            set_b = Double.parseDouble(db_set_b);
         }
         if (db_point_a.isEmpty() == false) {
             point_a = Integer.parseInt(db_point_a);
@@ -150,22 +157,30 @@ public class MainActivity extends AppCompatActivity {
 
         String temp_a = "";
         String temp_b = "";
+        int text_size = 16;
 
         if (Calculate()){
             temp_a = String.format("%.4f", unit_A);
             temp_b = String.format("%.4f", unit_B);
 
             txt_item_a.setText(temp_a);
+            txt_item_a.setTextColor(Color.DKGRAY);
+            txt_item_a.setTypeface(Typeface.DEFAULT_BOLD);
+            txt_item_a.setTextSize(text_size);
+
             txt_item_b.setText(temp_b);
+            txt_item_b.setTextColor(Color.DKGRAY);
+            txt_item_b.setTypeface(Typeface.DEFAULT_BOLD);
+            txt_item_b.setTextSize(text_size);
 
             if (unit_A > unit_B){
-                txt_item_title.setText("Bがお得");
+                txt_item_title.setText("Bがお得▶︎");
             }
             else if (unit_A < unit_B){
-                txt_item_title.setText("Ａがお得");
+                txt_item_title.setText("◀︎Ａがお得");
             }
             else{
-                txt_item_title.setText("同じ");
+                txt_item_title.setText("＝同じ＝");
             }
         }
     }
@@ -176,6 +191,9 @@ public class MainActivity extends AppCompatActivity {
         txt_item_b = findViewById(R.id.text_item_b);
         txt_item_title = findViewById(R.id.text_item_title);
 
+        btn_reset_a = findViewById(R.id.btn_reset_a);
+        btn_reset_b = findViewById(R.id.btn_reset_b);
+        btn_reset_all = findViewById(R.id.btn_reset_all);
         btn_pri_a = findViewById(R.id.btn_price_a);
         btn_pri_b = findViewById(R.id.btn_price_b);
         btn_amount_a = findViewById(R.id.btn_amount_a);
@@ -190,26 +208,74 @@ public class MainActivity extends AppCompatActivity {
         int select_color = R.drawable.bak_btn_2;
         int no_select_color = R.drawable.bak_btn_1;
         String input_tmp = "";
+        int text_size = 16;
     //カーソル表示
+        btn_reset_a.setBackgroundTintList(null);
+        btn_reset_a.setBackgroundResource(R.drawable.bak_btn_5);
+        btn_reset_a.setTextSize(text_size);
+        btn_reset_a.setTextColor(Color.DKGRAY);
+        btn_reset_a.setTypeface(Typeface.DEFAULT_BOLD);
+
+        btn_reset_b.setBackgroundTintList(null);
+        btn_reset_b.setBackgroundResource(R.drawable.bak_btn_5);
+        btn_reset_b.setTextSize(text_size);
+        btn_reset_b.setTextColor(Color.DKGRAY);
+        btn_reset_b.setTypeface(Typeface.DEFAULT_BOLD);
+
+        btn_reset_all.setBackgroundTintList(null);
+        btn_reset_all.setBackgroundResource(R.drawable.bak_btn_5);
+        btn_reset_all.setTextSize(text_size);
+        btn_reset_all.setTextColor(Color.RED);
+        btn_reset_all.setTypeface(Typeface.DEFAULT_BOLD);
+
         btn_pri_a.setBackgroundTintList(null);
         btn_pri_a.setBackgroundResource(no_select_color);
+        btn_pri_a.setTextSize(text_size);
+        btn_pri_a.setTextColor(Color.DKGRAY);
+        btn_pri_a.setTypeface(Typeface.DEFAULT_BOLD);
+
         btn_pri_b.setBackgroundTintList(null);
         btn_pri_b.setBackgroundResource(no_select_color);
+        btn_pri_b.setTextSize(text_size);
+        btn_pri_b.setTextColor(Color.DKGRAY);
+        btn_pri_b.setTypeface(Typeface.DEFAULT_BOLD);
 
         btn_amount_a.setBackgroundTintList(null);
         btn_amount_a.setBackgroundResource(no_select_color);
+        btn_amount_a.setTextSize(text_size);
+        btn_amount_a.setTextColor(Color.DKGRAY);
+        btn_amount_a.setTypeface(Typeface.DEFAULT_BOLD);
+
         btn_amount_b.setBackgroundTintList(null);
         btn_amount_b.setBackgroundResource(no_select_color);
+        btn_amount_b.setTextSize(text_size);
+        btn_amount_b.setTextColor(Color.DKGRAY);
+        btn_amount_b.setTypeface(Typeface.DEFAULT_BOLD);
 
         btn_set_a.setBackgroundTintList(null);
         btn_set_a.setBackgroundResource(no_select_color);
+        btn_set_a.setTextSize(text_size);
+        btn_set_a.setTextColor(Color.DKGRAY);
+        btn_set_a.setTypeface(Typeface.DEFAULT_BOLD);
+
         btn_set_b.setBackgroundTintList(null);
         btn_set_b.setBackgroundResource(no_select_color);
+        btn_set_b.setTextSize(text_size);
+        btn_set_b.setTextColor(Color.DKGRAY);
+        btn_set_b.setTypeface(Typeface.DEFAULT_BOLD);
 
         btn_point_a.setBackgroundTintList(null);
         btn_point_a.setBackgroundResource(no_select_color);
+        btn_point_a.setTextSize(text_size);
+        btn_point_a.setTextColor(Color.DKGRAY);
+        btn_point_a.setTypeface(Typeface.DEFAULT_BOLD);
+
         btn_point_b.setBackgroundTintList(null);
         btn_point_b.setBackgroundResource(no_select_color);
+        btn_point_b.setTextSize(text_size);
+        btn_point_b.setTextColor(Color.DKGRAY);
+        btn_point_b.setTypeface(Typeface.DEFAULT_BOLD);
+
 
         switch (now_cursor){
             case CR_PRI_A:      btn_pri_a.setBackgroundResource(select_color);
@@ -298,14 +364,16 @@ public class MainActivity extends AppCompatActivity {
                 break;
 
             case CR_POINT_A:
-                if (input_data == "." && db_point_a.contains(".")) {
+//                if (input_data == "." && db_point_a.contains(".")) {
+                if (input_data == "." ) {
                     return;
                 }
                 db_point_a += input_data;
                 break;
 
             case CR_POINT_B:
-                if (input_data == "." && db_point_b.contains(".")) {
+//                if (input_data == "." && db_point_b.contains(".")) {
+                if (input_data == "." ) {
                     return;
                 }
                 db_point_b += input_data;
@@ -493,6 +561,8 @@ public class MainActivity extends AppCompatActivity {
         txt_item_b.setText("商品Ｂ");
 
         txt_item_title.setText("");
+
+        now_cursor = CR_PRI_A;
         DisplayScreen();
         DisplayCalculateResult();
     }
