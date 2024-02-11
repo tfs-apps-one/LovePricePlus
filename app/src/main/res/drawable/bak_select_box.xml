@@ -5,15 +5,24 @@ android:shape="rectangle">
 <!-- 背景色 -->
     <gradient
         android:angle="270"
-        android:startColor="#ffffffee"
-        android:endColor="#fffcfccc"
+        android:startColor="#ffffecaa"
+        android:endColor="#fffeecAA"
         />
+    <!--
+    オレンジ
+    android:startColor="#ffffecaa"
+    android:endColor="#fffddb99"
+
+    デフォルトの薄い黄色
+    android:startColor="#ffffffee"
+    android:endColor="#fffcfccc"
+    -->
 <!-- 角の丸み -->
 <corners android:radius="2dp" />
 
 <!-- 枠線 width:線の幅、color:線の色 -->
 <stroke
-    android:width="3dp"
+    android:width="4dp"
     android:color="#feaaaa" />
 
 </shape>

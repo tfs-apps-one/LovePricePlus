@@ -181,14 +181,14 @@ public class MainActivity extends AppCompatActivity {
 
 
             if (unit_A > unit_B){
-                txt_item_title.setText("Bがお得▶︎");
+                txt_item_title.setText("お得▶︎");
                 txt_item_title.setTextColor(Color.rgb(255,100,100));
 
                 txt_item_b.setTextColor(Color.rgb(255,100,100));
                 lay_item_b.setBackgroundResource(R.drawable.bak_select_box);
             }
             else if (unit_A < unit_B){
-                txt_item_title.setText("◀︎Ａがお得");
+                txt_item_title.setText("◀︎お得");
                 txt_item_title.setTextColor(Color.rgb(255,100,100));
 
                 txt_item_a.setTextColor(Color.rgb(255,100,100));
@@ -196,8 +196,12 @@ public class MainActivity extends AppCompatActivity {
             }
             else{
                 txt_item_title.setTextColor(Color.DKGRAY);
-                txt_item_title.setText("＝同じ＝");
+                txt_item_title.setText("同じ");
             }
+        }
+        else{
+            lay_item_a.setBackgroundResource(R.drawable.bak_noselect);
+            lay_item_b.setBackgroundResource(R.drawable.bak_noselect);
         }
     }
 
