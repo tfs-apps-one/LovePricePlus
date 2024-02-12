@@ -13,11 +13,35 @@
         app:layout_constraintTop_toTopOf="parent"
         android:orientation="vertical">
 
+        <!--
+        <LinearLayout
+            android:id="@+id/linearLayout_40"
+            android:layout_width="match_parent"
+            android:layout_height="40dp"
+            app:layout_constraintTop_toTopOf="parent"
+            app:backgroundTint="@null"
+            android:background="@drawable/bak_noselect"
+            android:orientation="vertical">
+
+            <TextView
+                android:layout_width="match_parent"
+                android:layout_height="match_parent"
+                android:gravity="center"
+                android:text="Hello World!"
+                android:textStyle="bold"
+                app:layout_constraintBottom_toBottomOf="parent"
+                app:layout_constraintLeft_toLeftOf="parent"
+                app:layout_constraintRight_toRightOf="parent"
+                app:layout_constraintTop_toTopOf="parent" />
+
+        </LinearLayout>
+        -->
+
         <LinearLayout
             android:id="@+id/linearLayout_10"
             android:layout_width="match_parent"
             android:layout_height="0dp"
-            android:layout_weight="3"
+            android:layout_weight="6"
             android:layout_marginStart="5dp"
             android:layout_marginTop="5dp"
             android:layout_marginEnd="5dp"
@@ -63,6 +87,7 @@
                         android:layout_weight="1"
                         android:background="@drawable/bak_btn_1"
                         app:backgroundTint="@null"
+                        android:onClick="onPrice_a"
                         tools:ignore="SpeakableTextPresentCheck,TouchTargetSizeCheck" />
 
                     <Button
@@ -76,6 +101,7 @@
                         android:layout_weight="1"
                         android:background="@drawable/bak_btn_1"
                         app:backgroundTint="@null"
+                        android:onClick="onAmount_a"
                         tools:ignore="TouchTargetSizeCheck,SpeakableTextPresentCheck" />
 
                     <Button
@@ -89,6 +115,7 @@
                         android:layout_weight="1"
                         android:background="@drawable/bak_btn_1"
                         app:backgroundTint="@null"
+                        android:onClick="onSet_a"
                         tools:ignore="SpeakableTextPresentCheck,TouchTargetSizeCheck" />
 
                     <Button
@@ -102,20 +129,22 @@
                         android:layout_weight="1"
                         android:background="@drawable/bak_btn_1"
                         app:backgroundTint="@null"
+                        android:onClick="onPoint_a"
                         tools:ignore="SpeakableTextPresentCheck,TouchTargetSizeCheck" />
 
                     <Button
                         android:id="@+id/btn_reset_a"
                         android:layout_width="match_parent"
                         android:layout_height="0dp"
-                        android:layout_marginStart="5dp"
+                        android:layout_marginStart="20dp"
                         android:layout_marginTop="5dp"
-                        android:layout_marginEnd="5dp"
+                        android:layout_marginEnd="20dp"
                         android:layout_marginBottom="5dp"
                         android:layout_weight="1"
-                        android:background="@drawable/bak_btn_3"
+                        android:background="@drawable/bak_btn_5"
                         android:gravity="center|center"
                         android:text="リセット"
+                        android:onClick="onReset_a"
                         android:textStyle="bold"
                         app:backgroundTint="@null"
                         tools:ignore="TouchTargetSizeCheck" />
@@ -138,6 +167,8 @@
                         android:layout_weight="1"
                         app:backgroundTint="@null"
                         android:text=""
+                        android:textStyle="bold"
+                        android:gravity="center|center"
                         />
 
                     <TextView
@@ -205,13 +236,14 @@
                         android:layout_width="match_parent"
                         android:layout_height="0dp"
                         android:layout_marginStart="5dp"
-                        android:layout_marginTop="5dp"
+                        android:layout_marginTop="10dp"
                         android:layout_marginEnd="5dp"
                         android:layout_marginBottom="5dp"
                         android:layout_weight="1"
-                        android:background="@drawable/bak_btn_2"
+                        android:background="@drawable/bak_btn_1"
                         android:gravity="center|center"
-                        android:text="ALL"
+                        android:text="全消去"
+                        android:onClick="onReset_All"
                         android:textStyle="bold"
                         app:backgroundTint="@null"
                         tools:ignore="TouchTargetSizeCheck" />
@@ -248,6 +280,7 @@
                         android:layout_weight="1"
                         android:background="@drawable/bak_btn_1"
                         app:backgroundTint="@null"
+                        android:onClick="onPrice_b"
                         tools:ignore="SpeakableTextPresentCheck,TouchTargetSizeCheck" />
 
                     <Button
@@ -261,6 +294,7 @@
                         android:layout_weight="1"
                         android:background="@drawable/bak_btn_1"
                         app:backgroundTint="@null"
+                        android:onClick="onAmount_b"
                         tools:ignore="SpeakableTextPresentCheck,TouchTargetSizeCheck" />
 
                     <Button
@@ -274,6 +308,7 @@
                         android:layout_weight="1"
                         android:background="@drawable/bak_btn_1"
                         app:backgroundTint="@null"
+                        android:onClick="onSet_b"
                         tools:ignore="SpeakableTextPresentCheck,TouchTargetSizeCheck" />
 
                     <Button
@@ -287,20 +322,22 @@
                         android:layout_weight="1"
                         android:background="@drawable/bak_btn_1"
                         app:backgroundTint="@null"
+                        android:onClick="onPoint_b"
                         tools:ignore="SpeakableTextPresentCheck,TouchTargetSizeCheck" />
 
                     <Button
                         android:id="@+id/btn_reset_b"
                         android:layout_width="match_parent"
                         android:layout_height="0dp"
-                        android:layout_marginStart="5dp"
+                        android:layout_marginStart="20dp"
                         android:layout_marginTop="5dp"
-                        android:layout_marginEnd="5dp"
+                        android:layout_marginEnd="20dp"
                         android:layout_marginBottom="5dp"
                         android:layout_weight="1"
-                        android:background="@drawable/bak_btn_3"
+                        android:background="@drawable/bak_btn_5"
                         android:gravity="center|center"
                         android:text="リセット"
+                        android:onClick="onReset_b"
                         android:textStyle="bold"
                         app:backgroundTint="@null"
                         tools:ignore="TouchTargetSizeCheck" />
@@ -315,12 +352,14 @@
             android:id="@+id/linearLayout_20"
             android:layout_width="match_parent"
             android:layout_height="0dp"
-            android:layout_weight="3"
+            android:layout_weight="5"
             android:layout_marginStart="5dp"
             android:layout_marginTop="5dp"
             android:layout_marginEnd="5dp"
             android:layout_marginBottom="5dp"
             app:layout_constraintTop_toTopOf="parent"
+            app:backgroundTint="@null"
+            android:background="@drawable/bak_noselect"
             android:orientation="vertical">
 
             <LinearLayout
@@ -328,6 +367,8 @@
                 android:layout_width="match_parent"
                 android:layout_height="match_parent"
                 android:layout_alignParentStart="true"
+                app:backgroundTint="@null"
+                android:background="@drawable/bak_input"
                 android:orientation="vertical">
 
                 <LinearLayout
@@ -335,8 +376,6 @@
                     android:layout_width="match_parent"
                     android:layout_height="0dp"
                     android:layout_weight="3"
-                    app:backgroundTint="@null"
-                    android:background="@drawable/bak_noselect"
                     android:orientation="horizontal">
 
                     <Button
@@ -350,9 +389,12 @@
                         android:layout_weight="1"
                         android:gravity="center|center"
                         android:text="７"
+                        android:onClick="onNum7"
                         android:textStyle="bold"
-                        android:background="@drawable/bak_btn_4"
+                        android:background="@drawable/bak_btn_7"
                         app:backgroundTint="@null"
+                        android:textSize="20dp"
+                        android:textColor="#fefefe"
                         tools:ignore="SpeakableTextPresentCheck,TouchTargetSizeCheck" />
 
                     <Button
@@ -366,9 +408,12 @@
                         android:layout_weight="1"
                         android:gravity="center|center"
                         android:text="８"
+                        android:onClick="onNum8"
                         android:textStyle="bold"
-                        android:background="@drawable/bak_btn_4"
+                        android:background="@drawable/bak_btn_7"
                         app:backgroundTint="@null"
+                        android:textSize="20dp"
+                        android:textColor="#fefefe"
                         tools:ignore="SpeakableTextPresentCheck,TouchTargetSizeCheck" />
 
                     <Button
@@ -381,9 +426,12 @@
                         android:layout_marginBottom="5dp"
                         android:layout_weight="1"
                         android:text="９"
+                        android:onClick="onNum9"
                         android:textStyle="bold"
-                        android:background="@drawable/bak_btn_4"
+                        android:background="@drawable/bak_btn_7"
                         app:backgroundTint="@null"
+                        android:textSize="20dp"
+                        android:textColor="#fefefe"
                         tools:ignore="SpeakableTextPresentCheck,TouchTargetSizeCheck" />
 
                     <Button
@@ -395,10 +443,13 @@
                         android:layout_marginEnd="5dp"
                         android:layout_marginBottom="5dp"
                         android:layout_weight="1"
-                        android:text="履歴"
+                        android:text="短縮"
+                        android:onClick="onHistory"
                         android:textStyle="bold"
-                        android:background="@drawable/bak_btn_4"
+                        android:background="@drawable/bak_btn_3"
                         app:backgroundTint="@null"
+                        android:textSize="18dp"
+                        android:textColor="#888888"
                         tools:ignore="SpeakableTextPresentCheck,TouchTargetSizeCheck" />
 
                 </LinearLayout>
@@ -408,8 +459,6 @@
                     android:layout_width="match_parent"
                     android:layout_height="0dp"
                     android:layout_weight="3"
-                    app:backgroundTint="@null"
-                    android:background="@drawable/bak_noselect"
                     android:orientation="horizontal">
 
                     <Button
@@ -423,9 +472,12 @@
                         android:layout_weight="1"
                         android:gravity="center|center"
                         android:text="４"
+                        android:onClick="onNum4"
                         android:textStyle="bold"
-                        android:background="@drawable/bak_btn_4"
+                        android:background="@drawable/bak_btn_7"
                         app:backgroundTint="@null"
+                        android:textSize="20dp"
+                        android:textColor="#fefefe"
                         tools:ignore="SpeakableTextPresentCheck,TouchTargetSizeCheck" />
 
                     <Button
@@ -439,9 +491,12 @@
                         android:layout_weight="1"
                         android:gravity="center|center"
                         android:text="５"
+                        android:onClick="onNum5"
                         android:textStyle="bold"
-                        android:background="@drawable/bak_btn_4"
+                        android:background="@drawable/bak_btn_7"
                         app:backgroundTint="@null"
+                        android:textSize="20dp"
+                        android:textColor="#fefefe"
                         tools:ignore="SpeakableTextPresentCheck,TouchTargetSizeCheck" />
 
                     <Button
@@ -454,9 +509,12 @@
                         android:layout_marginBottom="5dp"
                         android:layout_weight="1"
                         android:text="６"
+                        android:onClick="onNum6"
                         android:textStyle="bold"
-                        android:background="@drawable/bak_btn_4"
+                        android:background="@drawable/bak_btn_7"
                         app:backgroundTint="@null"
+                        android:textSize="20dp"
+                        android:textColor="#fefefe"
                         tools:ignore="SpeakableTextPresentCheck,TouchTargetSizeCheck" />
 
                     <Button
@@ -468,10 +526,13 @@
                         android:layout_marginEnd="5dp"
                         android:layout_marginBottom="5dp"
                         android:layout_weight="1"
-                        android:text="前へ"
+                        android:text="◀︎"
+                        android:onClick="onNumBefore"
                         android:textStyle="bold"
                         android:background="@drawable/bak_btn_4"
                         app:backgroundTint="@null"
+                        android:textSize="20dp"
+                        android:textColor="#555555"
                         tools:ignore="SpeakableTextPresentCheck,TouchTargetSizeCheck" />
 
                 </LinearLayout>
@@ -481,8 +542,6 @@
                     android:layout_width="match_parent"
                     android:layout_height="0dp"
                     android:layout_weight="3"
-                    app:backgroundTint="@null"
-                    android:background="@drawable/bak_noselect"
                     android:orientation="horizontal">
 
                     <Button
@@ -496,9 +555,12 @@
                         android:layout_weight="1"
                         android:gravity="center|center"
                         android:text="１"
+                        android:onClick="onNum1"
                         android:textStyle="bold"
-                        android:background="@drawable/bak_btn_4"
+                        android:background="@drawable/bak_btn_7"
                         app:backgroundTint="@null"
+                        android:textSize="20dp"
+                        android:textColor="#fefefe"
                         tools:ignore="SpeakableTextPresentCheck,TouchTargetSizeCheck" />
 
                     <Button
@@ -512,9 +574,12 @@
                         android:layout_weight="1"
                         android:gravity="center|center"
                         android:text="２"
+                        android:onClick="onNum2"
                         android:textStyle="bold"
-                        android:background="@drawable/bak_btn_4"
+                        android:background="@drawable/bak_btn_7"
                         app:backgroundTint="@null"
+                        android:textSize="20dp"
+                        android:textColor="#fefefe"
                         tools:ignore="SpeakableTextPresentCheck,TouchTargetSizeCheck" />
 
                     <Button
@@ -527,9 +592,12 @@
                         android:layout_marginBottom="5dp"
                         android:layout_weight="1"
                         android:text="３"
+                        android:onClick="onNum3"
                         android:textStyle="bold"
-                        android:background="@drawable/bak_btn_4"
+                        android:background="@drawable/bak_btn_7"
                         app:backgroundTint="@null"
+                        android:textSize="20dp"
+                        android:textColor="#fefefe"
                         tools:ignore="SpeakableTextPresentCheck,TouchTargetSizeCheck" />
 
                     <Button
@@ -541,10 +609,13 @@
                         android:layout_marginEnd="5dp"
                         android:layout_marginBottom="5dp"
                         android:layout_weight="1"
-                        android:text="次へ"
+                        android:text="▶︎"
+                        android:onClick="onNumNext"
                         android:textStyle="bold"
                         android:background="@drawable/bak_btn_4"
                         app:backgroundTint="@null"
+                        android:textSize="20dp"
+                        android:textColor="#555555"
                         tools:ignore="SpeakableTextPresentCheck,TouchTargetSizeCheck" />
 
                 </LinearLayout>
@@ -554,8 +625,6 @@
                     android:layout_width="match_parent"
                     android:layout_height="0dp"
                     android:layout_weight="3"
-                    app:backgroundTint="@null"
-                    android:background="@drawable/bak_noselect"
                     android:orientation="horizontal">
 
                     <Button
@@ -568,10 +637,13 @@
                         android:layout_marginBottom="5dp"
                         android:layout_weight="1"
                         android:gravity="center|center"
-                        android:text="００"
+                        android:text="00"
+                        android:onClick="onNum00"
                         android:textStyle="bold"
-                        android:background="@drawable/bak_btn_4"
+                        android:background="@drawable/bak_btn_7"
                         app:backgroundTint="@null"
+                        android:textSize="20dp"
+                        android:textColor="#fefefe"
                         tools:ignore="SpeakableTextPresentCheck,TouchTargetSizeCheck" />
 
                     <Button
@@ -585,9 +657,12 @@
                         android:layout_weight="1"
                         android:gravity="center|center"
                         android:text="０"
+                        android:onClick="onNum0"
                         android:textStyle="bold"
-                        android:background="@drawable/bak_btn_4"
+                        android:background="@drawable/bak_btn_7"
                         app:backgroundTint="@null"
+                        android:textSize="20dp"
+                        android:textColor="#fefefe"
                         tools:ignore="SpeakableTextPresentCheck,TouchTargetSizeCheck" />
 
                     <Button
@@ -600,9 +675,12 @@
                         android:layout_marginBottom="5dp"
                         android:layout_weight="1"
                         android:text="．"
+                        android:onClick="onNumDot"
                         android:textStyle="bold"
-                        android:background="@drawable/bak_btn_4"
+                        android:background="@drawable/bak_btn_7"
                         app:backgroundTint="@null"
+                        android:textSize="20dp"
+                        android:textColor="#fefefe"
                         tools:ignore="SpeakableTextPresentCheck,TouchTargetSizeCheck" />
 
                     <Button
@@ -614,10 +692,13 @@
                         android:layout_marginEnd="5dp"
                         android:layout_marginBottom="5dp"
                         android:layout_weight="1"
-                        android:text="削除"
+                        android:text="✖️"
+                        android:onClick="onNumDelete"
                         android:textStyle="bold"
-                        android:background="@drawable/bak_btn_4"
+                        android:background="@drawable/bak_btn_6"
                         app:backgroundTint="@null"
+                        android:textSize="20dp"
+                        android:textColor="#fefefe"
                         tools:ignore="SpeakableTextPresentCheck,TouchTargetSizeCheck" />
 
                 </LinearLayout>
@@ -636,7 +717,7 @@
             <TextView
                 android:layout_width="match_parent"
                 android:layout_height="match_parent"
-                android:text="Hello World!"
+                android:text=""
                 app:layout_constraintBottom_toBottomOf="parent"
                 app:layout_constraintLeft_toLeftOf="parent"
                 app:layout_constraintRight_toRightOf="parent"
