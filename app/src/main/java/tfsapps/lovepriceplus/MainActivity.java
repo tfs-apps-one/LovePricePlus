@@ -2,6 +2,12 @@ package tfsapps.lovepriceplus;
 
 import androidx.appcompat.app.AppCompatActivity;
 
+import android.app.AlertDialog;
+import android.content.ContentValues;
+import android.content.Context;
+import android.content.DialogInterface;
+import android.database.Cursor;
+import android.database.sqlite.SQLiteDatabase;
 import android.graphics.Color;
 import android.graphics.Typeface;
 import android.os.Bundle;
@@ -9,6 +15,7 @@ import android.view.View;
 import android.widget.Button;
 import android.widget.LinearLayout;
 import android.widget.TextView;
+import android.widget.Toast;
 
 public class MainActivity extends AppCompatActivity {
 
@@ -51,6 +58,25 @@ public class MainActivity extends AppCompatActivity {
 
     private double unit_A = 0;
     private double unit_B = 0;
+
+    //  DB関連
+    private MyOpenHelper helper;    //DBアクセス
+    private int db_isopen = 0;      //DB使用したか
+    private String db_history1_a;   //item a
+    private String db_history1_b;   //item b
+    private String db_history2_a;   //item a
+    private String db_history2_b;   //item b
+    private String db_history3_a;   //item a
+    private String db_history3_b;   //item b
+    private String db_history4_a;   //item a
+    private String db_history4_b;   //item b
+    private String db_history5_a;   //item a
+    private String db_history5_b;   //item b
+    private int db_system1;
+    private int db_system2;
+    private int db_system3;
+    private int db_system4;
+    private int db_system5;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -703,10 +729,6 @@ public class MainActivity extends AppCompatActivity {
         NumDataInput();
     }
 
-    public void onHistory(View v) {
-
-    }
-
     public void onNumNext(View v) {
         ChangeCursor(1, 0);
     }
@@ -719,6 +741,48 @@ public class MainActivity extends AppCompatActivity {
         NumDataDelete();
     }
 
+    /********************************
+        履歴
+     ********************************/
+    public void onHistory(View v) {
+
+        AlertDialog.Builder builder = new AlertDialog.Builder(this);
+        builder.setTitle("〜 短縮入力 機能 〜");
+        builder.setMessage("\n\n短縮入力とは「価格、容量、数量、ポイント」を保存&読込する事が可能です。日常的に使用する条件を保存すると便利です。\n\n操作に応じてボタンを選択して下さい。\n\n\n\n [戻る] 短縮入力画面を閉じる\n [読込] 保存した値を読み込む\n [保存] 入力した値を保存する\n\n\n");
+
+        builder.setPositiveButton("保存", new DialogInterface.OnClickListener() {
+            @Override
+            public void onClick(DialogInterface dialog, int which) {
+                // TODO Auto-generated method stub
+                //ダイアログ処理
+                AppDbSetHistoryData(1);
+                AppDBUpdated();
+            }
+        });
+
+        builder.setNegativeButton("読込", new DialogInterface.OnClickListener() {
+            @Override
+            public void onClick(DialogInterface dialog, int which) {
+                // TODO Auto-generated method stub
+                AppDbGetHistoryData(1);
+                DisplayScreen();
+                DisplayCalculateResult();
+            }
+        });
+
+        builder.setNeutralButton("戻る", new DialogInterface.OnClickListener(){
+            @Override
+            public void onClick(DialogInterface dialog, int which) {
+                // TODO Auto-generated method stub
+                /*
+                 *   処理なし（戻るだけ）
+                 * */
+            }
+        });
+        AlertDialog dialog = builder.create();
+        dialog.show();
+    }
+
     /**
      * OS関連処理
      */
@@ -727,7 +791,7 @@ public class MainActivity extends AppCompatActivity {
         super.onStart();
         //DBのロード
         /* データベース */
-        //helper = new MyOpenHelper(this);
+        helper = new MyOpenHelper(this);
         AppDBInitRoad();
     }
 
@@ -757,18 +821,246 @@ public class MainActivity extends AppCompatActivity {
         //  DB更新
         AppDBUpdated();
     }
+    /*
+        計算条件をDBデータに反映
+     */
+    public void AppDbSetHistoryData(int index) {
+        switch (index){
+            default:
+            case 1:
+                db_history1_a = db_price_a + "," + db_amount_a + "," + db_set_a + "," + db_point_a + ",";
+                db_history1_b = db_price_b + "," + db_amount_b + "," + db_set_b + "," + db_point_b + ",";
+                break;
 
-    /***************************************************
-     DB初期ロードおよび設定
-     ****************************************************/
-    public void AppDBInitRoad() {
+            case 2:
+                db_history2_a = db_price_a + "," + db_amount_a + "," + db_set_a + "," + db_point_a + ",";
+                db_history2_b = db_price_b + "," + db_amount_b + "," + db_set_b + "," + db_point_b + ",";
+                break;
+
+            case 3:
+                db_history3_a = db_price_a + "," + db_amount_a + "," + db_set_a + "," + db_point_a + ",";
+                db_history3_b = db_price_b + "," + db_amount_b + "," + db_set_b + "," + db_point_b + ",";
+                break;
+
+            case 4:
+                db_history4_a = db_price_a + "," + db_amount_a + "," + db_set_a + "," + db_point_a + ",";
+                db_history4_b = db_price_b + "," + db_amount_b + "," + db_set_b + "," + db_point_b + ",";
+                break;
+
+            case 5:
+                db_history5_a = db_price_a + "," + db_amount_a + "," + db_set_a + "," + db_point_a + ",";
+                db_history5_b = db_price_b + "," + db_amount_b + "," + db_set_b + "," + db_point_b + ",";
+                break;
+        }
+    }
+    public void AppDbGetHistoryData(int index) {
+        String[] temp_a;
+        String[] temp_b;
+
+        switch (index) {
+            default:
+            case 1:
+                temp_a = db_history1_a.split(",");
+                temp_b = db_history1_b.split(",");
+                break;
+
+            case 2:
+                temp_a = db_history2_a.split(",");
+                temp_b = db_history2_b.split(",");
+                break;
+
+            case 3:
+                temp_a = db_history3_a.split(",");
+                temp_b = db_history3_b.split(",");
+                break;
+
+            case 4:
+                temp_a = db_history4_a.split(",");
+                temp_b = db_history4_b.split(",");
+                break;
+
+            case 5:
+                temp_a = db_history5_a.split(",");
+                temp_b = db_history5_b.split(",");
+                break;
+        }
+
+        if (!temp_a[0].isEmpty()){
+            db_price_a = temp_a[0];
+        }
+        else{
+            db_price_a = "";
+        }
+        if (!temp_a[1].isEmpty()){
+            db_amount_a = temp_a[1];
+        }
+        else{
+            db_amount_a = "";
+        }
+        if (!temp_a[2].isEmpty()){
+            db_set_a = temp_a[2];
+        }
+        else{
+            db_set_a = "";
+        }
+        if (!temp_a[3].isEmpty()){
+            db_point_a = temp_a[3];
+        }
+        else{
+            db_point_a = "";
+        }
+
+        if (!temp_b[0].isEmpty()){
+            db_price_b = temp_b[0];
+        }
+        else{
+            db_price_b = "";
+        }
+        if (!temp_b[1].isEmpty()){
+            db_amount_b = temp_b[1];
+        }
+        else{
+            db_amount_b = "";
+        }
+        if (!temp_b[2].isEmpty()){
+            db_set_b = temp_b[2];
+        }
+        else{
+            db_set_b = "";
+        }
+        if (!temp_b[3].isEmpty()){
+            db_point_b = temp_b[3];
+        }
+        else{
+            db_point_b = "";
+        }
+
 
     }
 
     /***************************************************
-     DB更新
-     ****************************************************/
+        DB初期ロードおよび設定
+    ****************************************************/
+    public void AppDBInitRoad() {
+        SQLiteDatabase db = helper.getReadableDatabase();
+        StringBuilder sql = new StringBuilder();
+        sql.append(" SELECT");
+        sql.append(" isopen");
+        sql.append(" ,history1_a,history1_b");
+        sql.append(" ,history2_a,history2_b");
+        sql.append(" ,history3_a,history3_b");
+        sql.append(" ,history4_a,history4_b");
+        sql.append(" ,history5_a,history5_b");
+        sql.append(" ,system1,system2");
+        sql.append(" ,system3,system4");
+        sql.append(" ,system5");
+        sql.append(" FROM appinfo;");
+        try {
+            Cursor cursor = db.rawQuery(sql.toString(), null);
+            //TextViewに表示
+            StringBuilder text = new StringBuilder();
+            if (cursor.moveToNext()) {
+                db_isopen = cursor.getInt(0);
+                db_history1_a = cursor.getString(1);
+                db_history1_b = cursor.getString(2);
+                db_history2_a = cursor.getString(3);
+                db_history2_b = cursor.getString(4);
+                db_history3_a = cursor.getString(5);
+                db_history3_b = cursor.getString(6);
+                db_history4_a = cursor.getString(7);
+                db_history4_b = cursor.getString(8);
+                db_history5_a = cursor.getString(9);
+                db_history5_b = cursor.getString(10);
+                db_system1 = cursor.getInt(11);
+                db_system2 = cursor.getInt(12);
+                db_system3 = cursor.getInt(13);
+                db_system4 = cursor.getInt(14);
+                db_system5 = cursor.getInt(15);
+            }
+        } finally {
+            db.close();
+        }
+
+        db = helper.getWritableDatabase();
+        if (db_isopen == 0) {
+            long ret;
+            /* 新規レコード追加 */
+            ContentValues insertValues = new ContentValues();
+            insertValues.put("isopen", 1);
+            insertValues.put("history1_a", "");
+            insertValues.put("history1_b", "");
+            insertValues.put("history2_a", "");
+            insertValues.put("history2_b", "");
+            insertValues.put("history3_a", "");
+            insertValues.put("history3_b", "");
+            insertValues.put("history4_a", "");
+            insertValues.put("history4_b", "");
+            insertValues.put("history5_a", "");
+            insertValues.put("history5_b", "");
+            insertValues.put("system1", 0);
+            insertValues.put("system2", 0);
+            insertValues.put("system3", 0);
+            insertValues.put("system4", 0);
+            insertValues.put("system5", 0);
+            try {
+                ret = db.insert("appinfo", null, insertValues);
+            } finally {
+                db.close();
+            }
+            /*
+            if (ret == -1) {
+                Toast.makeText(this, "DataBase Create.... ERROR", Toast.LENGTH_SHORT).show();
+            } else {
+                Toast.makeText(this, "DataBase Create.... OK", Toast.LENGTH_SHORT).show();
+            }
+             */
+
+        } else {
+            /*
+            Toast.makeText(this, "Data Loading...  isopen:" + db_isopen, Toast.LENGTH_SHORT).show();
+            */
+        }
+    }
+    /***************************************************
+        DB更新
+    ****************************************************/
     public void AppDBUpdated() {
+        SQLiteDatabase db = helper.getWritableDatabase();
+        ContentValues insertValues = new ContentValues();
+        insertValues.put("isopen", db_isopen);
+        insertValues.put("history1_a", db_history1_a);
+        insertValues.put("history1_b", db_history1_b);
+        insertValues.put("history2_a", db_history2_a);
+        insertValues.put("history2_b", db_history2_b);
+        insertValues.put("history3_a", db_history3_a);
+        insertValues.put("history3_b", db_history3_b);
+        insertValues.put("history4_a", db_history4_a);
+        insertValues.put("history4_b", db_history4_b);
+        insertValues.put("history5_a", db_history5_a);
+        insertValues.put("history5_b", db_history5_b);
+        insertValues.put("system1", db_system1);
+        insertValues.put("system2", db_system2);
+        insertValues.put("system3", db_system3);
+        insertValues.put("system4", db_system4);
+        insertValues.put("system5", db_system5);
+        int ret;
+        try {
+            ret = db.update("appinfo", insertValues, null, null);
+        } finally {
+            db.close();
+        }
+        if (ret != -1){
+            Context context = getApplicationContext();
+            Toast.makeText(context, "セーブ中...", Toast.LENGTH_SHORT).show();
+//            Toast.makeText(context, "セーブ中...("+db_data1+")...", Toast.LENGTH_SHORT).show();
+        }
+        /*
+        if (ret == -1) {
+            Toast.makeText(this, "Saving.... ERROR ", Toast.LENGTH_SHORT).show();
+        } else {
+            Toast.makeText(this, "Saving.... OK ", Toast.LENGTH_SHORT).show();
+        }
+         */
 
     }
 }
