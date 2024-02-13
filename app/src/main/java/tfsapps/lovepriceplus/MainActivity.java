@@ -17,6 +17,9 @@ import android.widget.LinearLayout;
 import android.widget.TextView;
 import android.widget.Toast;
 
+import com.google.android.gms.ads.AdRequest;
+import com.google.android.gms.ads.AdView;
+
 public class MainActivity extends AppCompatActivity {
 
     private String db_price_a = "";
@@ -78,10 +81,18 @@ public class MainActivity extends AppCompatActivity {
     private int db_system4;
     private int db_system5;
 
+    // 広告
+    private AdView mAdview;
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
+
+        //広告
+        mAdview = findViewById(R.id.adView);
+        AdRequest adRequest = new AdRequest.Builder().build();
+        mAdview.loadAd(adRequest);
 
         DisplayScreenLoad();
         DisplayScreen();
@@ -1049,11 +1060,14 @@ public class MainActivity extends AppCompatActivity {
         } finally {
             db.close();
         }
+        /*
         if (ret != -1){
             Context context = getApplicationContext();
             Toast.makeText(context, "セーブ中...", Toast.LENGTH_SHORT).show();
 //            Toast.makeText(context, "セーブ中...("+db_data1+")...", Toast.LENGTH_SHORT).show();
         }
+        */
+
         /*
         if (ret == -1) {
             Toast.makeText(this, "Saving.... ERROR ", Toast.LENGTH_SHORT).show();
@@ -1061,6 +1075,5 @@ public class MainActivity extends AppCompatActivity {
             Toast.makeText(this, "Saving.... OK ", Toast.LENGTH_SHORT).show();
         }
          */
-
     }
 }

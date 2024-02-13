@@ -2,6 +2,10 @@
 <manifest xmlns:android="http://schemas.android.com/apk/res/android"
     package="tfsapps.lovepriceplus">
 
+    <uses-permission android:name="android.permission.SENSOR" />
+    <uses-permission android:name="android.permission.INTERNET" />
+    <uses-permission android:name="android.permission.ACCESS_NETWORK_STATE" />
+
     <application
         android:allowBackup="true"
         android:icon="@drawable/lpp_512x512"
@@ -9,6 +13,11 @@
         android:roundIcon="@drawable/lpp_512x512"
         android:supportsRtl="true"
         android:theme="@style/Theme.LovePricePlus">
+
+        <meta-data
+            android:name="com.google.android.gms.ads.APPLICATION_ID"
+            android:value="ca-app-pub-4924620089567925~6113258806" />
+
         <activity
             android:name=".MainActivity"
             android:screenOrientation="portrait"

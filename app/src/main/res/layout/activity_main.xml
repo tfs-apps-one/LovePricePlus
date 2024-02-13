@@ -1,6 +1,7 @@
 <?xml version="1.0" encoding="utf-8"?>
 <androidx.constraintlayout.widget.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:ads="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
@@ -714,6 +715,7 @@
             app:layout_constraintTop_toTopOf="parent"
             android:orientation="vertical">
 
+            <!--
             <TextView
                 android:layout_width="match_parent"
                 android:layout_height="match_parent"
@@ -722,6 +724,23 @@
                 app:layout_constraintLeft_toLeftOf="parent"
                 app:layout_constraintRight_toRightOf="parent"
                 app:layout_constraintTop_toTopOf="parent" />
+            -->
+
+            <com.google.android.gms.ads.AdView
+                android:id="@+id/adView"
+                android:layout_width="match_parent"
+                android:layout_height="match_parent"
+                android:layout_alignParentBottom="true"
+                android:layout_centerHorizontal="true"
+                android:layout_marginBottom="5dp"
+                ads:adSize="BANNER"
+                ads:adUnitId="ca-app-pub-4924620089567925/9474737552">
+            <!--
+                テスト広告
+                ads:adUnitId="ca-app-pub-3940256099942544/6300978111">
+            -->
+            </com.google.android.gms.ads.AdView>
+
         </LinearLayout>
 
 
