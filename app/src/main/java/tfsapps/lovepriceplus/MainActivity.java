@@ -3,13 +3,16 @@ package tfsapps.lovepriceplus;
 import androidx.appcompat.app.AppCompatActivity;
 
 import android.app.AlertDialog;
+import android.content.ActivityNotFoundException;
 import android.content.ContentValues;
 import android.content.Context;
 import android.content.DialogInterface;
+import android.content.Intent;
 import android.database.Cursor;
 import android.database.sqlite.SQLiteDatabase;
 import android.graphics.Color;
 import android.graphics.Typeface;
+import android.net.Uri;
 import android.os.Bundle;
 import android.view.View;
 import android.widget.Button;
@@ -81,6 +84,13 @@ public class MainActivity extends AppCompatActivity {
     private int db_system4;
     private int db_system5;
 
+    //評価ポップアップ
+    private int ReviewCount = 1;
+    //test_make
+//    private int REVIEW_POP = 3;
+    private int REVIEW_POP = 10;
+
+
     // 広告
     private AdView mAdview;
 
@@ -97,6 +107,78 @@ public class MainActivity extends AppCompatActivity {
         DisplayScreenLoad();
         DisplayScreen();
     }
+
+    private void ShowRatingPopup() {
+
+        String ttl = "";
+        String mess = "";
+
+        //アプリを起動して 10回目の時
+        if (db_system1 != REVIEW_POP){
+            return;
+        }
+        else {
+            db_system1++;
+        }
+        ttl =   "★☆アプリ評価のお願い☆★";
+        mess =  "\nいつもご利用ありがとうございます\n"+
+                "\nたくさん利用して頂いている貴方にお願いです。アプリを評価してもらませんか？ 評価して頂けると励みになります。"+
+                "\n\n(この通知は今回限りです)"+
+                "\n\n\n";
+
+        AlertDialog.Builder builder = new AlertDialog.Builder(this);
+        builder.setTitle(ttl);
+        builder.setMessage(mess);
+        builder.setPositiveButton("評価する", new DialogInterface.OnClickListener() {
+            @Override
+            public void onClick(DialogInterface dialog, int which) {
+                RedirectToPlayStoreForRating();
+                dialog.dismiss();
+            }
+        });
+        builder.setNegativeButton("　後で　", new DialogInterface.OnClickListener() {
+            @Override
+            public void onClick(DialogInterface dialog, int which) {
+                dialog.dismiss();
+            }
+        });
+        builder.setCancelable(false);
+        builder.show();
+    }
+
+    private void ShowRatingPopupNG() {
+        String ttl = "";
+        String mess = "";
+
+        ttl = "接続に失敗しました";
+        mess = "\n評価サイトへのアクセスに失敗しました\n" +
+                "\n" +
+                "\n\n" +
+                "\n\n\n";
+
+        AlertDialog.Builder builder = new AlertDialog.Builder(this);
+        builder.setTitle(ttl);
+        builder.setMessage(mess);
+        builder.setPositiveButton("確認", new DialogInterface.OnClickListener() {
+            @Override
+            public void onClick(DialogInterface dialog, int which) {
+                dialog.dismiss();
+            }
+        });
+        builder.setCancelable(false);
+        builder.show();
+    }
+
+    private void RedirectToPlayStoreForRating() {
+        try {
+            Uri uri = Uri.parse("https://play.google.com/store/apps/details?id=" + getPackageName());
+            Intent goToMarket = new Intent(Intent.ACTION_VIEW, uri);
+            startActivity(goToMarket);
+        } catch (ActivityNotFoundException e) {
+            ShowRatingPopupNG();
+        }
+    }
+
 
     /**************************************************
      * 金額計算処理
@@ -804,6 +886,15 @@ public class MainActivity extends AppCompatActivity {
         /* データベース */
         helper = new MyOpenHelper(this);
         AppDBInitRoad();
+
+        //評価ポップアップ処理
+        if (db_system1 <= REVIEW_POP){
+            if (ReviewCount != 0){
+                db_system1++;
+                ReviewCount = 0;
+            }
+        }
+        ShowRatingPopup();
     }
 
     @Override
