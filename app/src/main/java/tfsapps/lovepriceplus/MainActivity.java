@@ -20,8 +20,13 @@ import android.widget.LinearLayout;
 import android.widget.TextView;
 import android.widget.Toast;
 
+import java.util.Arrays;
+
 import com.google.android.gms.ads.AdRequest;
 import com.google.android.gms.ads.AdView;
+import com.google.android.gms.ads.MobileAds;
+import com.google.android.gms.ads.initialization.InitializationStatus;
+import com.google.android.gms.ads.initialization.OnInitializationCompleteListener;
 
 public class MainActivity extends AppCompatActivity {
 
@@ -100,9 +105,11 @@ public class MainActivity extends AppCompatActivity {
         setContentView(R.layout.activity_main);
 
         //広告
-        mAdview = findViewById(R.id.adView);
-        AdRequest adRequest = new AdRequest.Builder().build();
-        mAdview.loadAd(adRequest);
+        MobileAds.initialize(this, initializationStatus -> {
+                    mAdview = findViewById(R.id.adView);
+                    AdRequest adRequest = new AdRequest.Builder().build();
+                    mAdview.loadAd(adRequest);
+                });
 
         DisplayScreenLoad();
         DisplayScreen();
@@ -930,28 +937,28 @@ public class MainActivity extends AppCompatActivity {
         switch (index){
             default:
             case 1:
-                db_history1_a = db_price_a + "," + db_amount_a + "," + db_set_a + "," + db_point_a + ",";
-                db_history1_b = db_price_b + "," + db_amount_b + "," + db_set_b + "," + db_point_b + ",";
+                db_history1_a = db_price_a + "," + db_amount_a + "," + db_set_a + "," + db_point_a + ","+"EOF";
+                db_history1_b = db_price_b + "," + db_amount_b + "," + db_set_b + "," + db_point_b + ","+"EOF";
                 break;
 
             case 2:
-                db_history2_a = db_price_a + "," + db_amount_a + "," + db_set_a + "," + db_point_a + ",";
-                db_history2_b = db_price_b + "," + db_amount_b + "," + db_set_b + "," + db_point_b + ",";
+                db_history2_a = db_price_a + "," + db_amount_a + "," + db_set_a + "," + db_point_a + ","+"EOF";
+                db_history2_b = db_price_b + "," + db_amount_b + "," + db_set_b + "," + db_point_b + ","+"EOF";
                 break;
 
             case 3:
-                db_history3_a = db_price_a + "," + db_amount_a + "," + db_set_a + "," + db_point_a + ",";
-                db_history3_b = db_price_b + "," + db_amount_b + "," + db_set_b + "," + db_point_b + ",";
+                db_history3_a = db_price_a + "," + db_amount_a + "," + db_set_a + "," + db_point_a + ","+"EOF";
+                db_history3_b = db_price_b + "," + db_amount_b + "," + db_set_b + "," + db_point_b + ","+"EOF";
                 break;
 
             case 4:
-                db_history4_a = db_price_a + "," + db_amount_a + "," + db_set_a + "," + db_point_a + ",";
-                db_history4_b = db_price_b + "," + db_amount_b + "," + db_set_b + "," + db_point_b + ",";
+                db_history4_a = db_price_a + "," + db_amount_a + "," + db_set_a + "," + db_point_a + ","+"EOF";
+                db_history4_b = db_price_b + "," + db_amount_b + "," + db_set_b + "," + db_point_b + ","+"EOF";
                 break;
 
             case 5:
-                db_history5_a = db_price_a + "," + db_amount_a + "," + db_set_a + "," + db_point_a + ",";
-                db_history5_b = db_price_b + "," + db_amount_b + "," + db_set_b + "," + db_point_b + ",";
+                db_history5_a = db_price_a + "," + db_amount_a + "," + db_set_a + "," + db_point_a + ","+"EOF";
+                db_history5_b = db_price_b + "," + db_amount_b + "," + db_set_b + "," + db_point_b + ","+"EOF";
                 break;
         }
     }
@@ -1036,8 +1043,6 @@ public class MainActivity extends AppCompatActivity {
         else{
             db_point_b = "";
         }
-
-
     }
 
     /***************************************************
