@@ -708,6 +708,7 @@
 
         </LinearLayout>
 
+
         <LinearLayout
             android:id="@+id/linearLayout_30"
             android:layout_width="match_parent"
@@ -715,6 +716,7 @@
             app:layout_constraintTop_toTopOf="parent"
             android:orientation="vertical">
 
+            <!-- 広告ダミーエレメント  -->
             <!--
             <TextView
                 android:layout_width="match_parent"
@@ -725,7 +727,6 @@
                 app:layout_constraintRight_toRightOf="parent"
                 app:layout_constraintTop_toTopOf="parent" />
             -->
-
             <com.google.android.gms.ads.AdView
                 android:id="@+id/adView"
                 android:layout_width="match_parent"
@@ -735,15 +736,15 @@
                 android:layout_marginBottom="5dp"
                 ads:adSize="BANNER"
                 ads:adUnitId="ca-app-pub-4924620089567925/9474737552">
-            <!--
+
+                <!--
                 本番広告
                 ads:adUnitId="ca-app-pub-4924620089567925/9474737552">
 
                 テスト広告
                 ads:adUnitId="ca-app-pub-3940256099942544/6300978111">
-            -->
+                -->
             </com.google.android.gms.ads.AdView>
-
         </LinearLayout>
 
 
