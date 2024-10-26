@@ -217,8 +217,8 @@
                         android:gravity="center|center"
                         />
 
-                    <TextView
-                        android:id="@+id/text_point_title"
+                    <LinearLayout
+                        android:id="@+id/linearLayout_110_2"
                         android:layout_width="match_parent"
                         android:layout_height="0dp"
                         android:layout_weight="1"
@@ -227,10 +227,33 @@
                         android:layout_marginEnd="5dp"
                         android:layout_marginBottom="5dp"
                         app:backgroundTint="@null"
-                        android:text="POINT"
-                        android:textStyle="bold"
-                        android:gravity="center|center"
-                        />
+                        android:background="@drawable/bak_noselect"
+                        android:orientation="vertical">
+
+                        <TextView
+                            android:id="@+id/text_point_title"
+                            android:layout_width="match_parent"
+                            android:layout_height="0dp"
+                            android:layout_weight="6"
+                            app:backgroundTint="@null"
+                            android:text="POINT"
+                            android:textStyle="bold"
+                            android:gravity="center|center"
+                            />
+
+                        <ImageButton
+                            android:id="@+id/img_question"
+                            android:layout_width="match_parent"
+                            android:layout_height="0dp"
+                            android:layout_weight="4"
+                            android:src="@drawable/question"
+                            android:background="@null"
+                            android:onClick="onQuestion"
+                            android:scaleType="fitCenter"
+                            android:gravity="center|center"
+                            />
+
+                    </LinearLayout>
 
                     <Button
                         android:id="@+id/btn_reset_all"
@@ -727,6 +750,7 @@
                 app:layout_constraintRight_toRightOf="parent"
                 app:layout_constraintTop_toTopOf="parent" />
             -->
+
             <com.google.android.gms.ads.AdView
                 android:id="@+id/adView"
                 android:layout_width="match_parent"

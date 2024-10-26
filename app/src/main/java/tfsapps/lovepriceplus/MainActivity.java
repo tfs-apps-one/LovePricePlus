@@ -290,8 +290,20 @@ public class MainActivity extends AppCompatActivity {
         int text_size = 16;
 
         if (Calculate()){
-            temp_a = String.format("%.4f", unit_A);
-            temp_b = String.format("%.4f", unit_B);
+            if (unit_A < unit_B) {
+                temp_a = "★お得★\n";
+                temp_b = "\n";
+            }
+            else if (unit_B < unit_A){
+                temp_a = "\n";
+                temp_b = "★お得★\n";
+            }
+            else{
+                temp_a = "同じ\n";
+                temp_b = "同じ\n";
+            }
+            temp_a = temp_a + String.format("%.3f", unit_A) + " 円";
+            temp_b = temp_b + String.format("%.3f", unit_B) + " 円";
 
             txt_item_a.setText(temp_a);
             txt_item_a.setTextColor(Color.DKGRAY);
@@ -307,23 +319,21 @@ public class MainActivity extends AppCompatActivity {
 
 
             if (unit_A > unit_B){
-                txt_item_title.setText("お得▶︎");
-                txt_item_title.setTextColor(Color.rgb(255,100,100));
+//                txt_item_title.setText("お得▶︎");
+//                txt_item_title.setTextColor(Color.rgb(255,100,100));
 
                 txt_item_b.setTextColor(Color.rgb(255,100,100));
                 lay_item_b.setBackgroundResource(R.drawable.bak_select_box);
             }
             else if (unit_A < unit_B){
-                txt_item_title.setText("◀︎お得");
-                txt_item_title.setTextColor(Color.rgb(255,100,100));
+//                txt_item_title.setText("◀︎お得");
+//                txt_item_title.setTextColor(Color.rgb(255,100,100));
 
                 txt_item_a.setTextColor(Color.rgb(255,100,100));
                 lay_item_a.setBackgroundResource(R.drawable.bak_select_box);
             }
-            else{
-                txt_item_title.setTextColor(Color.DKGRAY);
-                txt_item_title.setText("同じ");
-            }
+            txt_item_title.setTextColor(Color.DKGRAY);
+            txt_item_title.setText("単価");
         }
         else{
             lay_item_a.setBackgroundResource(R.drawable.bak_noselect);
@@ -378,7 +388,13 @@ public class MainActivity extends AppCompatActivity {
         ttl_point.setTextSize(text_size-1);
 
         TextView ttl_item = findViewById(R.id.text_item_title);
-        ttl_item.setText("単価");
+        if (unit_A > 0 || unit_B > 0)
+        {
+            ttl_item.setText("単価");
+        }
+        else {
+            ttl_item.setText("");
+        }
         ttl_item.setTextColor(Color.GRAY);
         ttl_item.setTypeface(Typeface.DEFAULT_BOLD);
         ttl_item.setTextSize(text_size);
@@ -717,6 +733,7 @@ public class MainActivity extends AppCompatActivity {
         db_set_a = "";
         db_point_a = "";
         txt_item_a.setText("商品Ａ");
+        unit_A = 0;
 
         txt_item_title.setText("");
         DisplayScreen();
@@ -734,6 +751,7 @@ public class MainActivity extends AppCompatActivity {
         db_set_b = "";
         db_point_b = "";
         txt_item_b.setText("商品Ｂ");
+        unit_B = 0;
 
         txt_item_title.setText("");
         DisplayScreen();
@@ -751,11 +769,14 @@ public class MainActivity extends AppCompatActivity {
         db_set_a = "";
         db_point_a = "";
         txt_item_a.setText("商品Ａ");
+        unit_A = 0;
+
         db_price_b = "";
         db_amount_b = "";
         db_set_b = "";
         db_point_b = "";
         txt_item_b.setText("商品Ｂ");
+        unit_B = 0;
 
         txt_item_title.setText("");
 
@@ -827,6 +848,21 @@ public class MainActivity extends AppCompatActivity {
     public void onNumDot(View v) {
         input_data = ".";
         NumDataInput();
+    }
+
+    public void onQuestion(View v) {
+        AlertDialog.Builder builder = new AlertDialog.Builder(this);
+        builder.setTitle("〜 POINTについて 〜");
+        builder.setMessage("\n\n店舗独自で運用されている[POINT]を計算に含めることができます。\n\n例えば、100円に付き [1] POINT が付与される場合、価格:248の商品は [2] POINT になります。そのため、POINT欄に [2] を入力して下さい\n[-2円] を差引して単価計算を行いどちらがお得を求めます\n\n\n");
+
+        builder.setPositiveButton("閉じる", new DialogInterface.OnClickListener() {
+            @Override
+            public void onClick(DialogInterface dialog, int which) {
+                // TODO Auto-generated method stub
+            }
+        });
+        AlertDialog dialog = builder.create();
+        dialog.show();
     }
 
     public void onNumNext(View v) {
