@@ -5,11 +5,15 @@ android:shape="rectangle">
 <!-- 背景色 -->
     <gradient
         android:angle="270"
-        android:startColor="#ffffecaa"
-        android:endColor="#fffeecAA"
+        android:startColor="#ffeeee"
+        android:endColor="#feaccc"
         />
     <!--
     オレンジ
+
+    android:startColor="#ffffecaa"
+    android:endColor="#fffeecAA"
+
     android:startColor="#ffffecaa"
     android:endColor="#fffddb99"
 
