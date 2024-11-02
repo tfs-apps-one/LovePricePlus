@@ -235,8 +235,8 @@
                             android:layout_width="match_parent"
                             android:layout_height="0dp"
                             android:layout_weight="6"
-                            app:backgroundTint="@null"
                             android:text="POINT"
+                            app:backgroundTint="@null"
                             android:textStyle="bold"
                             android:gravity="center|center"
                             />
@@ -458,7 +458,7 @@
                         android:textColor="#fefefe"
                         tools:ignore="SpeakableTextPresentCheck,TouchTargetSizeCheck" />
 
-                    <Button
+                    <ImageButton
                         android:id="@+id/btn_history"
                         android:layout_width="0dp"
                         android:layout_height="match_parent"
@@ -467,13 +467,13 @@
                         android:layout_marginEnd="5dp"
                         android:layout_marginBottom="5dp"
                         android:layout_weight="1"
-                        android:text="短縮"
-                        android:onClick="onHistory"
-                        android:textStyle="bold"
+                        android:src="@drawable/setting2"
+                        android:padding="11dp"
+                        android:onClick="onSetting"
+                        android:scaleType="fitCenter"
+                        android:gravity="center|center"
                         android:background="@drawable/bak_btn_3"
                         app:backgroundTint="@null"
-                        android:textSize="18dp"
-                        android:textColor="#888888"
                         tools:ignore="SpeakableTextPresentCheck,TouchTargetSizeCheck" />
 
                 </LinearLayout>
@@ -731,46 +731,45 @@
 
         </LinearLayout>
 
+      <!-- 広告ダミーエレメント  -->
 
-        <LinearLayout
-            android:id="@+id/linearLayout_30"
+     <LinearLayout
+        android:id="@+id/linearLayout_30"
+        android:layout_width="match_parent"
+        android:layout_height="70dp"
+        app:layout_constraintTop_toTopOf="parent"
+        android:orientation="vertical">
+
+         <!--
+        <TextView
             android:layout_width="match_parent"
-            android:layout_height="70dp"
-            app:layout_constraintTop_toTopOf="parent"
-            android:orientation="vertical">
+            android:layout_height="match_parent"
+            android:text=""
+            app:layout_constraintBottom_toBottomOf="parent"
+            app:layout_constraintLeft_toLeftOf="parent"
+            app:layout_constraintRight_toRightOf="parent"
+            app:layout_constraintTop_toTopOf="parent" />-->
 
-            <!-- 広告ダミーエレメント  -->
+        <com.google.android.gms.ads.AdView
+            android:id="@+id/adView"
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:layout_alignParentBottom="true"
+            android:layout_centerHorizontal="true"
+            android:layout_marginBottom="5dp"
+            ads:adSize="BANNER"
+            ads:adUnitId="ca-app-pub-4924620089567925/9474737552">
+
             <!--
-            <TextView
-                android:layout_width="match_parent"
-                android:layout_height="match_parent"
-                android:text=""
-                app:layout_constraintBottom_toBottomOf="parent"
-                app:layout_constraintLeft_toLeftOf="parent"
-                app:layout_constraintRight_toRightOf="parent"
-                app:layout_constraintTop_toTopOf="parent" />
+            本番広告
+            ads:adUnitId="ca-app-pub-4924620089567925/9474737552">
+
+            テスト広告
+            ads:adUnitId="ca-app-pub-3940256099942544/6300978111">
             -->
+        </com.google.android.gms.ads.AdView>
 
-            <com.google.android.gms.ads.AdView
-                android:id="@+id/adView"
-                android:layout_width="match_parent"
-                android:layout_height="match_parent"
-                android:layout_alignParentBottom="true"
-                android:layout_centerHorizontal="true"
-                android:layout_marginBottom="5dp"
-                ads:adSize="BANNER"
-                ads:adUnitId="ca-app-pub-4924620089567925/9474737552">
-
-                <!--
-                本番広告
-                ads:adUnitId="ca-app-pub-4924620089567925/9474737552">
-
-                テスト広告
-                ads:adUnitId="ca-app-pub-3940256099942544/6300978111">
-                -->
-            </com.google.android.gms.ads.AdView>
-        </LinearLayout>
-
+     </LinearLayout>
 
     </LinearLayout>
 
