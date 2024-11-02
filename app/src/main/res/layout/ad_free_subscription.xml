@@ -1,0 +1,73 @@
+<!-- res/layout/activity_ad_free_subscription.xml -->
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:orientation="vertical"
+    android:padding="16dp"
+    android:gravity="center"
+    android:background="#FFFFFF">
+
+    <!-- ヘッダーまたはタイトル -->
+    <TextView
+        android:id="@+id/subscriptionTitle"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="広告非表示サブスクリプション"
+        android:textSize="24sp"
+        android:textStyle="bold"
+        android:textColor="#333333"
+        android:paddingBottom="16dp" />
+
+    <!-- サブスクリプションの詳細説明 -->
+    <TextView
+        android:id="@+id/subscriptionDescription"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="6カ月ごとに240円で広告を非表示にします。"
+        android:textSize="16sp"
+        android:textColor="#555555"
+        android:paddingBottom="24dp"
+        android:gravity="center" />
+
+    <!-- サブスクリプション価格の表示（動的に設定可能） -->
+    <TextView
+        android:id="@+id/subscriptionPrice"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="¥240 / 6カ月"
+        android:textSize="18sp"
+        android:textStyle="bold"
+        android:textColor="#008577"
+        android:paddingBottom="24dp"
+        android:gravity="center" />
+
+    <!-- 購入ボタン -->
+    <Button
+        android:id="@+id/purchaseButton"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="購入する"
+        android:textColor="#FFFFFF"
+        android:textStyle="bold"
+        android:enabled="false"
+        android:textSize="21sp"
+        android:padding="12dp" />
+
+    <!-- 50dpの隙間 -->
+    <View
+        android:layout_width="match_parent"
+        android:layout_height="50dp" />
+
+    <!-- 戻るボタン -->
+    <Button
+        android:id="@+id/btnBack"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:text="戻る"
+        android:textSize="20sp"
+        android:backgroundTint="#555555"
+        android:textColor="#FFFFFF"
+        android:layout_marginBottom="20dp"/>
+
+
+</LinearLayout>

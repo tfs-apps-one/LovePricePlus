@@ -31,6 +31,10 @@
                 <category android:name="android.intent.category.LAUNCHER" />
             </intent-filter>
         </activity>
+
+        <!-- ここに追加します -->
+        <activity android:name=".SubscriptionActivity" />
+
     </application>
 
 </manifest>
