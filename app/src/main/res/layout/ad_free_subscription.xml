@@ -23,7 +23,17 @@
         android:id="@+id/subscriptionDescription"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:text="6カ月ごとに240円で広告を非表示にします。"
+        android:text="6カ月ごとに240円で広告を非表示にします"
+        android:textSize="16sp"
+        android:textColor="#555555"
+        android:paddingBottom="1dp"
+        android:gravity="center" />
+
+    <TextView
+        android:id="@+id/subscriptionDescription2"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="(1カ月当たり40円となります)"
         android:textSize="16sp"
         android:textColor="#555555"
         android:paddingBottom="24dp"
@@ -34,7 +44,7 @@
         android:id="@+id/subscriptionPrice"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:text="¥240 / 6カ月"
+        android:text="240円 / 6カ月"
         android:textSize="18sp"
         android:textStyle="bold"
         android:textColor="#008577"

@@ -750,15 +750,39 @@
             app:layout_constraintRight_toRightOf="parent"
             app:layout_constraintTop_toTopOf="parent" />-->
 
-        <com.google.android.gms.ads.AdView
-            android:id="@+id/adView"
-            android:layout_width="match_parent"
-            android:layout_height="match_parent"
-            android:layout_alignParentBottom="true"
-            android:layout_centerHorizontal="true"
-            android:layout_marginBottom="5dp"
-            ads:adSize="BANNER"
-            ads:adUnitId="ca-app-pub-4924620089567925/9474737552">
+         <LinearLayout
+             android:id="@+id/linearLayout_30_1"
+             android:layout_width="match_parent"
+             android:layout_height="0dp"
+             android:layout_weight="3"
+             android:orientation="horizontal">
+
+             <ImageButton
+                 android:id="@+id/img_trash"
+                 android:layout_width="0dp"
+                 android:layout_height="match_parent"
+                 android:layout_weight="1"
+                 android:layout_marginStart="5dp"
+                 android:layout_marginTop="5dp"
+                 android:layout_marginBottom="5dp"
+                 android:src="@drawable/trash"
+                 android:background="@null"
+                 android:padding="3dp"
+                 android:onClick="onTrash"
+                 android:scaleType="fitCenter"
+                 android:gravity="center|center"
+                 />
+
+             <com.google.android.gms.ads.AdView
+                android:id="@+id/adView"
+                android:layout_width="0dp"
+                android:layout_height="match_parent"
+                android:layout_weight="10"
+                android:layout_alignParentBottom="true"
+                android:layout_centerHorizontal="true"
+                android:layout_marginBottom="5dp"
+                ads:adSize="BANNER"
+                ads:adUnitId="ca-app-pub-4924620089567925/9474737552">
 
             <!--
             本番広告
@@ -767,8 +791,9 @@
             テスト広告
             ads:adUnitId="ca-app-pub-3940256099942544/6300978111">
             -->
-        </com.google.android.gms.ads.AdView>
+            </com.google.android.gms.ads.AdView>
 
+         </LinearLayout>
      </LinearLayout>
 
     </LinearLayout>
