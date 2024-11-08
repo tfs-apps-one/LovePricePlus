@@ -15,11 +15,14 @@ import android.graphics.Color;
 import android.graphics.Typeface;
 import android.net.Uri;
 import android.os.Bundle;
+import android.os.Handler;
+import android.os.Looper;
 import android.util.Log;
 import android.view.Gravity;
 import android.view.View;
 import android.widget.Button;
 import android.widget.FrameLayout;
+import android.widget.ImageButton;
 import android.widget.LinearLayout;
 import android.widget.TextView;
 import android.widget.Toast;
@@ -120,6 +123,9 @@ public class MainActivity extends AppCompatActivity implements PurchasesUpdatedL
     // 広告
     private boolean visibleAd = true;
     private AdView mAdview;
+    private ImageButton imgTrash;
+    private boolean visibleTrash = true;
+
     //サブスク
     private BillingClient billingClient;
     private static final String TAG = "tag-ad-free-MainActivity";
@@ -175,6 +181,8 @@ public class MainActivity extends AppCompatActivity implements PurchasesUpdatedL
         mAdview = findViewById(R.id.adView);
         AdRequest adRequest = new AdRequest.Builder().build();
         mAdview.loadAd(adRequest);
+
+        imgTrash = findViewById(R.id.img_trash);
     }
 
     public void AdViewActive(boolean flag){
@@ -186,6 +194,23 @@ public class MainActivity extends AppCompatActivity implements PurchasesUpdatedL
             // admob 表示
             mAdview.setVisibility(View.VISIBLE);
         }
+    }
+
+    public void TrashActive(boolean flag){
+        visibleTrash = flag;
+        runOnUiThread(new Runnable() {
+            @Override
+            public void run() {
+                if(!visibleTrash){
+                    imgTrash.setVisibility(View.GONE);
+                    imgTrash.requestLayout();
+                }
+                else{
+                    imgTrash.setVisibility(View.VISIBLE);
+                    imgTrash.requestLayout();
+                }
+            }
+        });
     }
 
     private void ShowRatingPopup() {
@@ -949,6 +974,10 @@ public class MainActivity extends AppCompatActivity implements PurchasesUpdatedL
         NumDataDelete();
     }
 
+    public void onTrash(View v){
+        Subscription();
+    }
+
     /********************************
         設定
      ********************************/
@@ -1365,10 +1394,12 @@ public class MainActivity extends AppCompatActivity implements PurchasesUpdatedL
                         }
                         if (isSubscribed){
                             Log.e(TAG, "@@@@@@ サブスク有効");
+                            TrashActive(false);
                             AdViewActive(false);
                         }
                         else{
                             Log.e(TAG, "@@@@@@ サブスク無効");
+                            TrashActive(true);
                             AdViewActive(true);
                         }
                     }
