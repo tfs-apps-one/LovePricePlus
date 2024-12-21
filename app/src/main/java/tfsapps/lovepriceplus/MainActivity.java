@@ -335,6 +335,12 @@ public class MainActivity extends AppCompatActivity implements PurchasesUpdatedL
         temp_a = pri_a;
         temp_b = pri_b;
 
+        if (point_a > 0) {
+            temp_a = temp_a - point_a;
+        }
+        if (point_b > 0) {
+            temp_b = temp_b - point_b;
+        }
         //１個当たりの金額
         if (temp_a <= 0 || temp_b <= 0) {
             return false;
@@ -356,6 +362,10 @@ public class MainActivity extends AppCompatActivity implements PurchasesUpdatedL
             temp_b = (temp_b / amount_b);
         }
 
+        unit_A = temp_a;
+        unit_B = temp_b;
+
+/*  ↓↓↓ 旧計算ロジック ↓↓↓
         //ポイント単価をやめる
         if (point_a > 0) {
             unit_A = temp_a - point_a;
@@ -369,7 +379,7 @@ public class MainActivity extends AppCompatActivity implements PurchasesUpdatedL
         else {
             unit_B = temp_b;
         }
-
+*/
         return true;
     }
 
