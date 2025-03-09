@@ -39,6 +39,8 @@ import com.android.billingclient.api.QueryPurchasesParams;
 import com.google.android.gms.ads.AdRequest;
 import com.google.android.gms.ads.AdSize;
 import com.google.android.gms.ads.AdView;
+import com.google.android.gms.ads.FullScreenContentCallback;
+import com.google.android.gms.ads.LoadAdError;
 import com.google.android.gms.ads.MobileAds;
 import com.google.android.gms.ads.initialization.InitializationStatus;
 import com.google.android.gms.ads.initialization.OnInitializationCompleteListener;
@@ -51,6 +53,8 @@ import com.android.billingclient.api.Purchase;
 import com.android.billingclient.api.BillingFlowParams;
 import com.android.billingclient.api.SkuDetails;
 import com.android.billingclient.api.SkuDetailsParams;
+import com.google.android.gms.ads.interstitial.InterstitialAd;
+import com.google.android.gms.ads.interstitial.InterstitialAdLoadCallback;
 
 public class MainActivity extends AppCompatActivity implements PurchasesUpdatedListener {
 
@@ -131,6 +135,18 @@ public class MainActivity extends AppCompatActivity implements PurchasesUpdatedL
     private static final String TAG = "tag-ad-free-MainActivity";
     private static final String SUBSCRIPTION_ID = "ad_free_plan"; //
 
+
+    //test_make
+    //インタースティシャル広告
+    private InterstitialAd mInterstitialAd;
+    //本番ID
+    private static final String AD_INTER_UNIT_ID = "ca-app-pub-4924620089567925/9156505561"; // 実際のIDに変更
+    //テストID
+//    private static final String AD_INTER_UNIT_ID = "ca-app-pub-3940256099942544/1033173712";
+
+    private int CAL_MAX_TAP = 29;
+    private boolean isInterAdd = true;
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -183,8 +199,60 @@ public class MainActivity extends AppCompatActivity implements PurchasesUpdatedL
         mAdview.loadAd(adRequest);
 
         imgTrash = findViewById(R.id.img_trash);
+
+        //インタースティシャル広告
+        loadInterstitialAd();
     }
 
+    /**************************************
+     * インタースティシャル広告をロード
+     ***************************************/
+    private void loadInterstitialAd() {
+        AdRequest adRequest = new AdRequest.Builder().build();
+
+        InterstitialAd.load(this, AD_INTER_UNIT_ID, adRequest, new InterstitialAdLoadCallback() {
+            @Override
+            public void onAdLoaded(@NonNull InterstitialAd interstitialAd) {
+                mInterstitialAd = interstitialAd;
+                Log.d("AdMob", "インタースティシャル広告がロードされました");
+
+                // 広告のコールバックを設定（閉じた後の動作）
+                mInterstitialAd.setFullScreenContentCallback(new FullScreenContentCallback() {
+                    @Override
+                    public void onAdDismissedFullScreenContent() {
+                        Log.d("AdMob", "広告が閉じられました");
+                        mInterstitialAd = null; // 再ロードの準備
+                        loadInterstitialAd(); // 次の広告をロード
+                    }
+
+                    @Override
+                    public void onAdFailedToShowFullScreenContent(com.google.android.gms.ads.AdError adError) {
+                        Log.d("AdMob", "広告の表示に失敗しました: " + adError.getMessage());
+                        mInterstitialAd = null; // 再ロードの準備
+                    }
+                });
+            }
+
+            @Override
+            public void onAdFailedToLoad(@NonNull LoadAdError loadAdError) {
+                Log.d("AdMob", "インタースティシャル広告のロードに失敗: " + loadAdError.getMessage());
+                mInterstitialAd = null;
+            }
+        });
+    }
+    // インタースティシャル広告を表示
+    private void showInterstitialAd() {
+        if (mInterstitialAd != null) {
+            mInterstitialAd.show(this);
+        } else {
+            Log.d("AdMob", "インタースティシャル広告はまだロードされていません");
+            loadInterstitialAd(); // すぐに次の広告をロード
+        }
+    }
+
+    /**************************************
+     * バナー広告
+    ***************************************/
     public void AdViewActive(boolean flag){
         visibleAd = flag;
         if (!visibleAd){
@@ -442,6 +510,22 @@ public class MainActivity extends AppCompatActivity implements PurchasesUpdatedL
             }
             txt_item_title.setTextColor(Color.DKGRAY);
             txt_item_title.setText("単価");
+
+            //全面広告処理
+            db_system2--;
+            if (db_system2 < 0){
+                db_system2 = CAL_MAX_TAP;
+            }
+            if (isInterAdd) {
+                if (db_system2 == 1) {
+                    //全面広告表示
+                    showInterstitialAd();
+                }
+                if (db_system2 == 5) {
+                    Context context = getApplicationContext();
+                    Toast.makeText(context, "まもなく全面広告が表示されます....", Toast.LENGTH_SHORT).show();
+                }
+            }
         }
         else{
             lay_item_a.setBackgroundResource(R.drawable.bak_noselect);
@@ -1406,11 +1490,13 @@ public class MainActivity extends AppCompatActivity implements PurchasesUpdatedL
                             Log.e(TAG, "@@@@@@ サブスク有効");
                             TrashActive(false);
                             AdViewActive(false);
+                            isInterAdd = false;
                         }
                         else{
                             Log.e(TAG, "@@@@@@ サブスク無効");
                             TrashActive(true);
                             AdViewActive(true);
+                            isInterAdd = true;
                         }
                     }
                     else{

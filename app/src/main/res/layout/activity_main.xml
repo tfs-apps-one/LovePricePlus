@@ -251,6 +251,7 @@
                             android:onClick="onQuestion"
                             android:scaleType="fitCenter"
                             android:gravity="center|center"
+                            android:text = "question button"
                             />
 
                     </LinearLayout>
@@ -771,6 +772,7 @@
                  android:onClick="onTrash"
                  android:scaleType="fitCenter"
                  android:gravity="center|center"
+                 android:text = "trash button"
                  />
 
              <com.google.android.gms.ads.AdView
