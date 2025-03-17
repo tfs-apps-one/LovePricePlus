@@ -144,7 +144,7 @@ public class MainActivity extends AppCompatActivity implements PurchasesUpdatedL
     //テストID
 //    private static final String AD_INTER_UNIT_ID = "ca-app-pub-3940256099942544/1033173712";
 
-    private int CAL_MAX_TAP = 29;
+    private int CAL_MAX_TAP = 39;
     private boolean isInterAdd = true;
 
     @Override
