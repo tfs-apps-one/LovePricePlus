@@ -31,11 +31,6 @@ import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.List;
 
-import com.android.billingclient.api.AcknowledgePurchaseParams;
-import com.android.billingclient.api.ProductDetails;
-import com.android.billingclient.api.PurchasesUpdatedListener;
-import com.android.billingclient.api.QueryProductDetailsParams;
-import com.android.billingclient.api.QueryPurchasesParams;
 import com.google.android.gms.ads.AdRequest;
 import com.google.android.gms.ads.AdSize;
 import com.google.android.gms.ads.AdView;
@@ -46,17 +41,11 @@ import com.google.android.gms.ads.initialization.InitializationStatus;
 import com.google.android.gms.ads.initialization.OnInitializationCompleteListener;
 
 //サブスク
-import com.android.billingclient.api.BillingClient;
-import com.android.billingclient.api.BillingClientStateListener;
-import com.android.billingclient.api.BillingResult;
-import com.android.billingclient.api.Purchase;
-import com.android.billingclient.api.BillingFlowParams;
-import com.android.billingclient.api.SkuDetails;
-import com.android.billingclient.api.SkuDetailsParams;
 import com.google.android.gms.ads.interstitial.InterstitialAd;
 import com.google.android.gms.ads.interstitial.InterstitialAdLoadCallback;
 
-public class MainActivity extends AppCompatActivity implements PurchasesUpdatedListener {
+//public class MainActivity extends AppCompatActivity implements PurchasesUpdatedListener {
+public class MainActivity extends AppCompatActivity {
 
     private String db_price_a = "";
     private String db_price_b = "";
@@ -131,9 +120,9 @@ public class MainActivity extends AppCompatActivity implements PurchasesUpdatedL
     private boolean visibleTrash = true;
 
     //サブスク
-    private BillingClient billingClient;
-    private static final String TAG = "tag-ad-free-MainActivity";
-    private static final String SUBSCRIPTION_ID = "ad_free_plan"; //
+//    private BillingClient billingClient;
+//    private static final String TAG = "tag-ad-free-MainActivity";
+//    private static final String SUBSCRIPTION_ID = "ad_free_plan"; //
 
 
     //test_make
@@ -197,8 +186,6 @@ public class MainActivity extends AppCompatActivity implements PurchasesUpdatedL
         mAdview = findViewById(R.id.adView);
         AdRequest adRequest = new AdRequest.Builder().build();
         mAdview.loadAd(adRequest);
-
-        imgTrash = findViewById(R.id.img_trash);
 
         //インタースティシャル広告
         loadInterstitialAd();
@@ -862,23 +849,6 @@ public class MainActivity extends AppCompatActivity implements PurchasesUpdatedL
 
 
     /**************************************************
-     * データ計算関連　ボタン処理
-     *
-     *************************************************/
-    public void NumDataInput(int cursor) {
-        //カーソルの決定
-
-        //入力チェック（桁数）
-        //小数点（２個以上の入力や、１桁目から小数点）
-        if (true){
-
-        }
-        //入力値のデータセット
-        //計算処理
-
-    }
-
-    /**************************************************
      * データ入力関連　ボタン処理
      *
      *************************************************/
@@ -1068,17 +1038,22 @@ public class MainActivity extends AppCompatActivity implements PurchasesUpdatedL
         NumDataDelete();
     }
 
+    /*
     public void onTrash(View v){
         Subscription();
-    }
+    }*/
 
     /********************************
         設定
      ********************************/
     public void onSetting(View v) {
+        History();
+
+        /*
         AlertDialog.Builder builder = new AlertDialog.Builder(this);
         builder.setTitle("設定メニュー");
-        builder.setMessage("\n\n【 短縮 】\n履歴入力で素早く簡単入力ができます\n\n\n\n【広告非表示】\nサブスクリプションで広告を非表示にすることができます\n\n\n\n\n\n");
+        builder.setMessage("\n\n【 短縮 】\n履歴入力で素早く簡単入力ができます\n\n\n\n【 戻る 】\nポップアップを閉じます\n\n\n\n\n\n");
+//        builder.setMessage("\n\n【 短縮 】\n履歴入力で素早く簡単入力ができます\n\n\n\n【広告非表示】\nサブスクリプションで広告を非表示にすることができます\n\n\n\n\n\n");
 
         builder.setPositiveButton("短縮", new DialogInterface.OnClickListener() {
             @Override
@@ -1089,6 +1064,7 @@ public class MainActivity extends AppCompatActivity implements PurchasesUpdatedL
             }
         });
 
+
         builder.setNegativeButton("広告非表示", new DialogInterface.OnClickListener() {
             @Override
             public void onClick(DialogInterface dialog, int which) {
@@ -1097,23 +1073,16 @@ public class MainActivity extends AppCompatActivity implements PurchasesUpdatedL
             }
         });
 
-        builder.setNeutralButton("戻る", new DialogInterface.OnClickListener(){
+        builder.setNegativeButton("戻る", new DialogInterface.OnClickListener(){
             @Override
             public void onClick(DialogInterface dialog, int which) {
                 // TODO Auto-generated method stub
-                /*
-                 *   処理なし（戻るだけ）
-                 * */
+                //処理なし
             }
         });
         AlertDialog dialog = builder.create();
         dialog.show();
-
-    }
-
-    public void Subscription() {
-        Intent intent = new Intent(MainActivity.this, SubscriptionActivity.class);
-        startActivity(intent);
+         */
     }
 
     public void History() {
@@ -1178,31 +1147,6 @@ public class MainActivity extends AppCompatActivity implements PurchasesUpdatedL
     @Override
     public void onResume() {
         super.onResume();
-        //サブスク
-        //BillingClientを初期化
-        billingClient = BillingClient.newBuilder(this)
-                .setListener(this)
-                .enablePendingPurchases()
-                .build();
-
-        // Google Playへの接続
-        billingClient.startConnection(new BillingClientStateListener() {
-            @Override
-            public void onBillingSetupFinished(@NonNull BillingResult billingResult) {
-                if (billingResult.getResponseCode() == BillingClient.BillingResponseCode.OK) {
-                    Log.d(TAG, "@@@@@@ Billing Client connected ");
-                    checkSubscriptionStatus();
-                } else {
-                    Log.e(TAG, "@@@@@@ Billing connection failed: " + billingResult.getDebugMessage());
-//                    Log.e(TAG, "Billing Client connection failed");
-                }
-            }
-
-            @Override
-            public void onBillingServiceDisconnected() {
-                Log.e(TAG, "@@@@@@ Billing Service disconnected");
-            }
-        });
     }
 
     @Override
@@ -1224,9 +1168,6 @@ public class MainActivity extends AppCompatActivity implements PurchasesUpdatedL
         super.onDestroy();
         //  DB更新
         AppDBUpdated();
-        if (billingClient != null){
-            billingClient.endConnection();
-        }
     }
     /*
         計算条件をDBデータに反映
@@ -1263,6 +1204,11 @@ public class MainActivity extends AppCompatActivity implements PurchasesUpdatedL
     public void AppDbGetHistoryData(int index) {
         String[] temp_a;
         String[] temp_b;
+
+        //履歴データが全くの空の場合
+        if (db_history1_a.length() == 0 && db_history1_b.length() == 0){
+            AppDbSetHistoryData(1);
+        }
 
         switch (index) {
             default:
@@ -1470,45 +1416,4 @@ public class MainActivity extends AppCompatActivity implements PurchasesUpdatedL
         }
          */
     }
-
-    /*-----------------------------------------------------------------
-        サブスク処理
-     -----------------------------------------------------------------*/
-    private void checkSubscriptionStatus(){
-        billingClient.queryPurchasesAsync(
-                QueryPurchasesParams.newBuilder().setProductType(BillingClient.ProductType.SUBS).build(),
-                (billingResult, purchasesList) -> {
-                    if (billingResult.getResponseCode() == BillingClient.BillingResponseCode.OK && purchasesList != null){
-                        boolean isSubscribed = false;
-                        for (Purchase purchase : purchasesList) {
-                            if (purchase.getProducts().contains(SUBSCRIPTION_ID)) {
-                                isSubscribed = true;
-                                break;
-                            }
-                        }
-                        if (isSubscribed){
-                            Log.e(TAG, "@@@@@@ サブスク有効");
-                            TrashActive(false);
-                            AdViewActive(false);
-                            isInterAdd = false;
-                        }
-                        else{
-                            Log.e(TAG, "@@@@@@ サブスク無効");
-                            TrashActive(true);
-                            AdViewActive(true);
-                            isInterAdd = true;
-                        }
-                    }
-                    else{
-                        Log.e(TAG, "@@@@@@ サブスク有効／無効情報の取得エラー");
-                    }
-                }
-        );
-    }
-
-    @Override
-    public void onPurchasesUpdated(BillingResult billingResult, List<Purchase>purchases){
-
-    }
-
 }

@@ -4,14 +4,14 @@ plugins {
 
 android {
     namespace 'tfsapps.lovepriceplus'
-    compileSdk 34
+    compileSdk 35
 
     defaultConfig {
         applicationId "tfsapps.lovepriceplus"
         minSdk 26
-        targetSdk 34
-        versionCode 14
-        versionName "2.3"
+        targetSdk 35
+        versionCode 15
+        versionName "2.4"
 
         testInstrumentationRunner "androidx.test.runner.AndroidJUnitRunner"
     }
@@ -41,6 +41,5 @@ dependencies {
     androidTestImplementation libs.espresso.core
 
     implementation 'com.google.android.gms:play-services-ads:23.2.0'
-    implementation 'com.android.billingclient:billing:6.0.1'
 
 }
