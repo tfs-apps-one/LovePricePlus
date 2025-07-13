@@ -758,6 +758,7 @@
              android:layout_weight="3"
              android:orientation="horizontal">
 
+             <!--
              <ImageButton
                  android:id="@+id/img_trash"
                  android:layout_width="0dp"
@@ -774,6 +775,7 @@
                  android:gravity="center|center"
                  android:text = "trash button"
                  />
+                 -->
 
              <com.google.android.gms.ads.AdView
                 android:id="@+id/adView"
