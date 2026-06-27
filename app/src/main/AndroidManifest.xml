@@ -5,6 +5,8 @@
     <uses-permission android:name="android.permission.SENSOR" />
     <uses-permission android:name="android.permission.INTERNET" />
     <uses-permission android:name="android.permission.ACCESS_NETWORK_STATE" />
+    <uses-permission android:name="android.permission.CAMERA" />
+    <uses-feature android:name="android.hardware.camera" android:required="false" />
 
     <application
         android:allowBackup="true"
@@ -15,6 +17,7 @@
         android:roundIcon="@drawable/lpp_512x512"
         android:supportsRtl="true"
         android:theme="@style/Theme.LovePricePlus"
+        android:extractNativeLibs="false"
         tools:targetApi="31">
 
         <meta-data
@@ -31,6 +34,12 @@
                 <category android:name="android.intent.category.LAUNCHER" />
             </intent-filter>
         </activity>
+
+        <!-- AR一発入力モード -->
+        <activity
+            android:name=".ArCameraActivity"
+            android:screenOrientation="portrait"
+            android:exported="false" />
 
         <!-- ここに追加します -->
         <activity android:name=".SubscriptionActivity" />

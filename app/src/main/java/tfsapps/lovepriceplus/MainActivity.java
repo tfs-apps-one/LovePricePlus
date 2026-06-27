@@ -1,12 +1,17 @@
 package tfsapps.lovepriceplus;
 
+import androidx.activity.result.ActivityResult;
+import androidx.activity.result.ActivityResultLauncher;
+import androidx.activity.result.contract.ActivityResultContracts;
 import androidx.annotation.NonNull;
 import androidx.appcompat.app.AppCompatActivity;
 
+import android.app.Activity;
 import android.app.AlertDialog;
 import android.content.ActivityNotFoundException;
 import android.content.ContentValues;
 import android.content.Context;
+import android.content.SharedPreferences;
 import android.content.DialogInterface;
 import android.content.Intent;
 import android.database.Cursor;
@@ -46,6 +51,12 @@ import com.google.android.gms.ads.interstitial.InterstitialAdLoadCallback;
 
 //public class MainActivity extends AppCompatActivity implements PurchasesUpdatedListener {
 public class MainActivity extends AppCompatActivity {
+
+    // ── AR一発入力モード ───────────────────────────────────────────────────────
+    private ActivityResultLauncher<Intent> mArLauncher;
+    private static final String PREF_NAME     = "lovepriceplus_prefs";
+    private static final String PREF_AR_COUNT = "ar_use_count";
+    private static final int    AR_AD_INTERVAL = 8; // 8回ごとにインタースティシャル広告
 
     private String db_price_a = "";
     private String db_price_b = "";
@@ -177,6 +188,11 @@ public class MainActivity extends AppCompatActivity {
             }
         });
          */
+
+        // AR一発入力 — ActivityResultLauncher を onCreate で登録（必須）
+        mArLauncher = registerForActivityResult(
+                new ActivityResultContracts.StartActivityForResult(),
+                this::onArResult);
 
         DisplayScreenLoad();
         DisplayScreen();
@@ -602,7 +618,7 @@ public class MainActivity extends AppCompatActivity {
         btn_reset_all.setBackgroundTintList(null);
         btn_reset_all.setBackgroundResource(R.drawable.bak_btn_5);
         btn_reset_all.setTextSize(text_size-2);
-        btn_reset_all.setTextColor(Color.rgb(255, 140, 140));
+        btn_reset_all.setTextColor(Color.rgb(220, 60, 60));
         btn_reset_all.setTypeface(Typeface.DEFAULT_BOLD);
 
         btn_pri_a.setBackgroundTintList(null);
@@ -1026,6 +1042,49 @@ public class MainActivity extends AppCompatActivity {
         dialog.show();
     }
 
+    public void onHelpMode(android.view.View view) {
+        String message =
+            "\n【 基本的な使い方 】\n" +
+            "商品Ａと商品Ｂの価格・容量・数量を入力すると、" +
+            "単価を比較してどちらがお得かを表示します。\n\n" +
+            "① 上部の入力ボタン（価格・容量・数量・POINT）をタップして選択\n" +
+            "② 下部のテンキーで数値を入力\n" +
+            "③ 両商品のデータが揃うと自動で単価計算して結果を表示\n\n" +
+            "◀  ▶ ボタンで入力項目を切り替えられます\n" +
+            "リセット / 全消去で入力値をクリアできます\n\n" +
+
+            "◆ ─────────── ◆\n" +
+            "【 📷 ARスキャン 】\n" +
+            "カメラで値札・ラベルを撮影し、価格と容量を自動読み取りします。\n" +
+            "商品ＡとＢを順番にスキャンすると、そのまま比較計算まで進みます。\n\n" +
+            "※ POPの大きな装飾文字や手書き・特殊フォントは読み取れない場合があります\n" +
+            "※ 読み取り精度は照明・角度・文字の状態に左右されます\n\n" +
+
+            "◆ ─────────── ◆\n" +
+            "【 POINT について 】\n" +
+            "店舗独自のポイントを計算に含めることができます。\n" +
+            "例：100円につき1ポイントが付く場合、248円の商品は「2」ポイント\n" +
+            "→ POINT欄に「2」を入力することで、2円を差し引いた実質価格で単価計算します。\n\n" +
+
+            "◆ ─────────── ◆\n" +
+            "【 ⚙ 短縮入力 】\n" +
+            "よく使う条件を保存・読み込みできます。\n" +
+            "「保存」で現在の入力値を記録、「読込」で呼び出し可能です。\n\n" +
+
+            "◆ ─────────── ◆\n" +
+            "【 免責事項 】\n" +
+            "本アプリの計算結果・ARスキャンの読み取り精度・その他すべての機能について、" +
+            "アプリ開発者は一切の責任を負いかねます。\n" +
+            "計算結果はあくまで参考情報としてご利用ください。" +
+            "最終的なご判断はご自身でお願いいたします。\n\n";
+
+        new AlertDialog.Builder(this)
+            .setTitle("使い方ガイド")
+            .setMessage(message)
+            .setPositiveButton("閉じる", null)
+            .show();
+    }
+
     public void onNumNext(View v) {
         ChangeCursor(1, 0);
     }
@@ -1372,6 +1431,83 @@ public class MainActivity extends AppCompatActivity {
             */
         }
     }
+    // ── AR一発入力モード ───────────────────────────────────────────────────────
+
+    /**
+     * 「📷 ARスキャン」ボタンタップ。
+     * 8回使用ごとにインタースティシャル広告を表示する（ブロックはしない）。
+     * 広告がある場合は広告→AR起動、ない場合はそのままAR起動。
+     */
+    public void onArMode(android.view.View view) {
+        SharedPreferences prefs = getSharedPreferences(PREF_NAME, Context.MODE_PRIVATE);
+        int count = prefs.getInt(PREF_AR_COUNT, 0) + 1;
+        prefs.edit().putInt(PREF_AR_COUNT, count).apply();
+
+        if (count >= AR_AD_INTERVAL && mInterstitialAd != null) {
+            // 8回目: インタースティシャル広告を表示し、閉じたらAR起動
+            prefs.edit().putInt(PREF_AR_COUNT, 0).apply();
+            mInterstitialAd.setFullScreenContentCallback(new FullScreenContentCallback() {
+                @Override
+                public void onAdDismissedFullScreenContent() {
+                    mInterstitialAd = null;
+                    loadInterstitialAd();
+                    launchArCamera();
+                }
+                @Override
+                public void onAdFailedToShowFullScreenContent(
+                        com.google.android.gms.ads.AdError adError) {
+                    mInterstitialAd = null;
+                    loadInterstitialAd();
+                    launchArCamera();
+                }
+            });
+            mInterstitialAd.show(this);
+        } else {
+            launchArCamera();
+        }
+    }
+
+    /** ArCameraActivity を実際に起動する共通処理 */
+    private void launchArCamera() {
+        Intent intent = new Intent(this, ArCameraActivity.class);
+        mArLauncher.launch(intent);
+    }
+
+    /**
+     * ArCameraActivity から返ってきた結果を処理する。
+     * 取得できた値を対応するdb_xxxフィールドにセットし、画面を更新する。
+     */
+    private void onArResult(@NonNull ActivityResult result) {
+        if (result.getResultCode() != Activity.RESULT_OK || result.getData() == null) {
+            return; // キャンセル or エラー
+        }
+
+        Intent data = result.getData();
+        int priceA  = data.getIntExtra(ArCameraActivity.EXTRA_PRICE_A,  -1);
+        int volumeA = data.getIntExtra(ArCameraActivity.EXTRA_VOLUME_A, -1);
+        int priceB  = data.getIntExtra(ArCameraActivity.EXTRA_PRICE_B,  -1);
+        int volumeB = data.getIntExtra(ArCameraActivity.EXTRA_VOLUME_B, -1);
+
+        Log.d("MainActivity", "AR Result: A(" + priceA + "," + volumeA
+                + ") B(" + priceB + "," + volumeB + ")");
+
+        // 取得できた値だけをセット（-1 = 未取得は空欄のまま）
+        if (priceA  > 0) db_price_a  = String.valueOf(priceA);
+        if (volumeA > 0) db_amount_a = String.valueOf(volumeA);
+        if (priceB  > 0) db_price_b  = String.valueOf(priceB);
+        if (volumeB > 0) db_amount_b = String.valueOf(volumeB);
+
+        // 画面を更新して計算も実行
+        DisplayScreen();
+        if (priceA > 0 && priceB > 0) {
+            DisplayCalculateResult();
+            Toast.makeText(this, "AR入力完了！自動計算しました", Toast.LENGTH_SHORT).show();
+        } else {
+            Toast.makeText(this, "AR入力完了。未取得の項目を手動で入力してください",
+                    Toast.LENGTH_LONG).show();
+        }
+    }
+
     /***************************************************
         DB更新
     ****************************************************/
