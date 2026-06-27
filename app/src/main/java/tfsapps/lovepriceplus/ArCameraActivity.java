@@ -93,6 +93,7 @@ public class ArCameraActivity extends AppCompatActivity
     private Button       mCloseBtn;
     private Button       mNextBtn;
     private Button       mRescanBtn;
+    private Button       mSkipBtn;
     private android.view.View mReadyOverlay;
     private AdView            mAdView;
 
@@ -137,6 +138,7 @@ public class ArCameraActivity extends AppCompatActivity
         mCloseBtn     = findViewById(R.id.ar_close_btn);
         mNextBtn      = findViewById(R.id.ar_next_btn);
         mRescanBtn    = findViewById(R.id.ar_rescan_btn);
+        mSkipBtn      = findViewById(R.id.ar_skip_btn);
         mReadyOverlay = findViewById(R.id.ar_ready_overlay);
 
         // バナー広告ロード
@@ -153,6 +155,7 @@ public class ArCameraActivity extends AppCompatActivity
         });
 
         mRescanBtn.setOnClickListener(v -> rescanCurrentStep());
+        mSkipBtn.setOnClickListener(v -> skipCurrentStep());
 
         updateUI();
 
@@ -369,6 +372,25 @@ public class ArCameraActivity extends AppCompatActivity
         updateUI();
     }
 
+    /** 現在のステップをスキップして次へ進む（データは-1=未取得として扱う） */
+    private void skipCurrentStep() {
+        mHandler.removeCallbacks(mAdvanceRunnable);
+        if (mStep == STEP_A) {
+            // A をスキップ → A の結果は -1 のまま、即座に Step B へ
+            mResultPriceA  = -1;
+            mResultVolumeA = -1;
+            mStep = STEP_B;
+            resetStepState();
+            updateUI();
+            Toast.makeText(this, "商品Aをスキップ。商品Bをスキャンしてください", Toast.LENGTH_SHORT).show();
+        } else {
+            // B をスキップ → B の結果は -1 のまま、完了
+            mResultPriceB  = -1;
+            mResultVolumeB = -1;
+            finishWithResult();
+        }
+    }
+
     // ── UI更新 ────────────────────────────────────────────────────────────────
 
     private void updateUI() {
@@ -376,10 +398,12 @@ public class ArCameraActivity extends AppCompatActivity
             mStepLabel.setText("STEP 1 / 2  商品A");
             mNavText.setText("商品Aの値札・ラベルを写してください");
             mNextBtn.setText("商品A 確定 ▶");
+            mSkipBtn.setText("Aをスキップ ▶B");
         } else {
             mStepLabel.setText("STEP 2 / 2  商品B");
             mNavText.setText("次に、商品Bを写してください");
             mNextBtn.setText("商品B 確定 ✓");
+            mSkipBtn.setText("Bをスキップ ✓完了");
         }
         updateStatusText();
     }

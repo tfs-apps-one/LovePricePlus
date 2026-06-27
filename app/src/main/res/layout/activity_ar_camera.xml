@@ -123,42 +123,63 @@
         android:layout_gravity="bottom"
         android:orientation="vertical">
 
-        <!-- アクションボタン行（再スキャン＋確定） -->
+        <!-- アクションボタン：2行レイアウト -->
         <LinearLayout
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:orientation="horizontal"
+            android:orientation="vertical"
             android:paddingStart="12dp"
             android:paddingTop="8dp"
             android:paddingEnd="12dp"
-            android:paddingBottom="8dp">
+            android:paddingBottom="4dp">
 
-            <!-- 再スキャンボタン -->
+            <!-- 1行目: スキップボタン（常時表示・全幅） -->
             <android.widget.Button
-                android:id="@+id/ar_rescan_btn"
-                android:layout_width="0dp"
-                android:layout_height="72dp"
-                android:layout_weight="1"
-                android:layout_marginEnd="8dp"
-                android:background="#CC1565C0"
-                android:text="🔄 再スキャン"
-                android:textColor="#FFFFFF"
-                android:textSize="18sp"
+                android:id="@+id/ar_skip_btn"
+                android:layout_width="match_parent"
+                android:layout_height="56dp"
+                android:background="#CC37474F"
+                android:text="Aをスキップ ▶B"
+                android:textColor="#BBFFFFFF"
+                android:textSize="15sp"
                 android:textStyle="bold"
-                android:visibility="gone" />
+                android:visibility="visible" />
 
-            <!-- 確定ボタン（金額認識後に出現） -->
-            <android.widget.Button
-                android:id="@+id/ar_next_btn"
-                android:layout_width="0dp"
-                android:layout_height="72dp"
-                android:layout_weight="1"
-                android:background="#CC2E7D32"
-                android:text="商品A 確定 ▶"
-                android:textColor="#FFFFFF"
-                android:textSize="18sp"
-                android:textStyle="bold"
-                android:visibility="gone" />
+            <!-- 2行目: 再スキャン＋確定（認識後に出現） -->
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:orientation="horizontal"
+                android:layout_marginTop="6dp">
+
+                <!-- 再スキャンボタン -->
+                <android.widget.Button
+                    android:id="@+id/ar_rescan_btn"
+                    android:layout_width="0dp"
+                    android:layout_height="60dp"
+                    android:layout_weight="1"
+                    android:layout_marginEnd="6dp"
+                    android:background="#CC1565C0"
+                    android:text="🔄 再スキャン"
+                    android:textColor="#FFFFFF"
+                    android:textSize="15sp"
+                    android:textStyle="bold"
+                    android:visibility="gone" />
+
+                <!-- 確定ボタン -->
+                <android.widget.Button
+                    android:id="@+id/ar_next_btn"
+                    android:layout_width="0dp"
+                    android:layout_height="60dp"
+                    android:layout_weight="1"
+                    android:background="#CC2E7D32"
+                    android:text="商品A 確定 ▶"
+                    android:textColor="#FFFFFF"
+                    android:textSize="15sp"
+                    android:textStyle="bold"
+                    android:visibility="gone" />
+
+            </LinearLayout>
 
         </LinearLayout>
 

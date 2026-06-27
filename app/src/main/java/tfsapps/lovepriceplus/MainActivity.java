@@ -1052,6 +1052,7 @@ public class MainActivity extends AppCompatActivity {
             "③ 両商品のデータが揃うと自動で単価計算して結果を表示\n\n" +
             "◀  ▶ ボタンで入力項目を切り替えられます\n" +
             "リセット / 全消去で入力値をクリアできます\n\n" +
+            "⌫ DEL ボタンで入力した数値を1文字ずつ削除できます\n\n" +
 
             "◆ ─────────── ◆\n" +
             "【 📷 ARスキャン 】\n" +
@@ -1059,6 +1060,11 @@ public class MainActivity extends AppCompatActivity {
             "商品ＡとＢを順番にスキャンすると、そのまま比較計算まで進みます。\n\n" +
             "※ POPの大きな装飾文字や手書き・特殊フォントは読み取れない場合があります\n" +
             "※ 読み取り精度は照明・角度・文字の状態に左右されます\n\n" +
+            "【 スキップボタンについて 】\n" +
+            "ARスキャン画面には「スキップ」ボタンが常に表示されています。\n" +
+            "・「Aをスキップ ▶B」→ 商品Aの読み取りをスキップして商品Bのスキャンへ進みます\n" +
+            "・「Bをスキップ ✓完了」→ 商品Bの読み取りをスキップして結果を返します\n" +
+            "認識が間違っていたり、片方だけやり直したい場合にご活用ください。\n\n" +
 
             "◆ ─────────── ◆\n" +
             "【 POINT について 】\n" +
@@ -1498,8 +1504,9 @@ public class MainActivity extends AppCompatActivity {
         if (volumeB > 0) db_amount_b = String.valueOf(volumeB);
 
         // 画面を更新して計算も実行
+        // ※ 既存入力値 + AR取得値を合わせてCalculate()で判定（スキップ時も対応）
         DisplayScreen();
-        if (priceA > 0 && priceB > 0) {
+        if (Calculate()) {
             DisplayCalculateResult();
             Toast.makeText(this, "AR入力完了！自動計算しました", Toast.LENGTH_SHORT).show();
         } else {

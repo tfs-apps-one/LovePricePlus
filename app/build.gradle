@@ -10,8 +10,8 @@ android {
         applicationId "tfsapps.lovepriceplus"
         minSdk 26
         targetSdk 35
-        versionCode 16
-        versionName "2.5"
+        versionCode 21
+        versionName "3.0"
 
         testInstrumentationRunner "androidx.test.runner.AndroidJUnitRunner"
     }
@@ -27,12 +27,7 @@ android {
         targetCompatibility JavaVersion.VERSION_1_8
     }
 
-    // 16 KB ページサイズ対応
-    packaging {
-        jniLibs {
-            useLegacyPackaging = false
-        }
-    }
+    // AGP 8.5.2以降はデフォルトで16KBアライメントを行うため、packagingブロックでの明示的な設定は不要です。
 }
 
 dependencies {
@@ -41,8 +36,6 @@ dependencies {
     implementation libs.material
     implementation libs.activity
     implementation libs.constraintlayout
-    implementation libs.play.services.analytics.impl
-    implementation libs.runtime.android
     testImplementation libs.junit
     androidTestImplementation libs.ext.junit
     androidTestImplementation libs.espresso.core
@@ -57,8 +50,8 @@ dependencies {
     implementation "androidx.camera:camera-camera2:${camerax_version}"
     implementation "androidx.camera:camera-lifecycle:${camerax_version}"
     implementation "androidx.camera:camera-view:${camerax_version}"
-    // ML Kit 日本語OCR
-    implementation 'com.google.mlkit:text-recognition-japanese:16.0.1'
+    // ML Kit 日本語OCR (16KB対応のためPlay開発者サービス経由の非バンドル版へ変更)
+    implementation 'com.google.android.gms:play-services-mlkit-text-recognition-japanese:16.0.1'
     // Guava — 16KB対応済みバージョン
     implementation 'com.google.guava:guava:33.2.1-android'
 

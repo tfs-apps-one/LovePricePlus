@@ -17,12 +17,16 @@
         android:roundIcon="@drawable/lpp_512x512"
         android:supportsRtl="true"
         android:theme="@style/Theme.LovePricePlus"
-        android:extractNativeLibs="false"
         tools:targetApi="31">
 
         <meta-data
             android:name="com.google.android.gms.ads.APPLICATION_ID"
             android:value="ca-app-pub-4924620089567925~6113258806" />
+
+        <!-- ML Kit の日本語モデルをインストール時にダウンロードする設定 -->
+        <meta-data
+            android:name="com.google.mlkit.vision.DEPENDENCIES"
+            android:value="ocr_japanese" />
 
         <activity
             android:name=".MainActivity"
