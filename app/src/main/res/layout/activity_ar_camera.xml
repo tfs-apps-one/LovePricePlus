@@ -1,0 +1,243 @@
+<?xml version="1.0" encoding="utf-8"?>
+<FrameLayout
+    xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:ads="http://schemas.android.com/apk/res-auto"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:background="#000000">
+
+    <!-- CameraX プレビュー -->
+    <androidx.camera.view.PreviewView
+        android:id="@+id/ar_preview_view"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        app:scaleType="fillCenter" />
+
+    <!-- AR オーバーレイ (透過) -->
+    <tfsapps.lovepriceplus.ArOverlayView
+        android:id="@+id/ar_overlay_view"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent" />
+
+    <!-- ヘッダー -->
+    <LinearLayout
+        android:id="@+id/ar_nav_layout"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_gravity="top"
+        android:layout_marginTop="50dp"
+        android:background="#DD000000"
+        android:orientation="vertical"
+        android:paddingStart="20dp"
+        android:paddingTop="16dp"
+        android:paddingEnd="16dp"
+        android:paddingBottom="16dp">
+
+        <TextView
+            android:id="@+id/ar_step_label"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:text="STEP 1 / 2"
+            android:textColor="#AAFFFFFF"
+            android:textSize="16sp" />
+
+        <TextView
+            android:id="@+id/ar_nav_text"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="15dp"
+            android:text="商品Aの値札・ラベルを写してください"
+            android:textColor="#FFFFFF"
+            android:textSize="22sp"
+            android:textStyle="bold" />
+
+        <TextView
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="6dp"
+            android:text="⚠️ POPの大きな装飾数字は性能上読み取れない場合があります"
+            android:textColor="#FF4444"
+            android:textSize="18sp"
+            android:textStyle="bold" />
+
+    </LinearLayout>
+
+    <!-- 閉じるボタン：右上 -->
+    <android.widget.Button
+        android:id="@+id/ar_close_btn"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_gravity="top|end"
+        android:layout_marginTop="58dp"
+        android:layout_marginEnd="8dp"
+        android:background="#DD000000"
+        android:paddingStart="16dp"
+        android:paddingTop="10dp"
+        android:paddingEnd="16dp"
+        android:paddingBottom="10dp"
+        android:text="✕ 閉じる"
+        android:textColor="#FFFFFF"
+        android:textSize="16sp"
+        android:textStyle="bold" />
+
+    <!-- 準備中オーバーレイ（STEP A確定 → B開始の一時停止期間） -->
+    <LinearLayout
+        android:id="@+id/ar_ready_overlay"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:gravity="center"
+        android:background="#CC000000"
+        android:orientation="vertical"
+        android:visibility="gone">
+
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="✅ 商品Aを確定しました"
+            android:textColor="#00E676"
+            android:textSize="22sp"
+            android:textStyle="bold"
+            android:paddingBottom="20dp" />
+
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="商品Bの準備をしてください..."
+            android:textColor="#EEEEEE"
+            android:textSize="18sp" />
+
+        <ProgressBar
+            android:layout_width="48dp"
+            android:layout_height="48dp"
+            android:layout_marginTop="24dp"
+            android:indeterminate="true"
+            android:indeterminateTint="#FFFFFF" />
+
+    </LinearLayout>
+
+    <!-- フッター + アクションボタンをまとめた下部エリア -->
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_gravity="bottom"
+        android:orientation="vertical">
+
+        <!-- アクションボタン：2行レイアウト -->
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:orientation="vertical"
+            android:paddingStart="12dp"
+            android:paddingTop="8dp"
+            android:paddingEnd="12dp"
+            android:paddingBottom="4dp">
+
+            <!-- 1行目: スキップボタン（常時表示・全幅） -->
+            <android.widget.Button
+                android:id="@+id/ar_skip_btn"
+                android:layout_width="match_parent"
+                android:layout_height="56dp"
+                android:background="#CC37474F"
+                android:text="Aをスキップ ▶B"
+                android:textColor="#BBFFFFFF"
+                android:textSize="15sp"
+                android:textStyle="bold"
+                android:visibility="visible" />
+
+            <!-- 2行目: 再スキャン＋確定（認識後に出現） -->
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:orientation="horizontal"
+                android:layout_marginTop="6dp">
+
+                <!-- 再スキャンボタン -->
+                <android.widget.Button
+                    android:id="@+id/ar_rescan_btn"
+                    android:layout_width="0dp"
+                    android:layout_height="60dp"
+                    android:layout_weight="1"
+                    android:layout_marginEnd="6dp"
+                    android:background="#CC1565C0"
+                    android:text="🔄 再スキャン"
+                    android:textColor="#FFFFFF"
+                    android:textSize="15sp"
+                    android:textStyle="bold"
+                    android:visibility="gone" />
+
+                <!-- 確定ボタン -->
+                <android.widget.Button
+                    android:id="@+id/ar_next_btn"
+                    android:layout_width="0dp"
+                    android:layout_height="60dp"
+                    android:layout_weight="1"
+                    android:background="#CC2E7D32"
+                    android:text="商品A 確定 ▶"
+                    android:textColor="#FFFFFF"
+                    android:textSize="15sp"
+                    android:textStyle="bold"
+                    android:visibility="gone" />
+
+            </LinearLayout>
+
+        </LinearLayout>
+
+        <!-- フッター：認識状態表示 -->
+        <LinearLayout
+            android:id="@+id/ar_status_layout"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:background="#DD000000"
+            android:orientation="vertical"
+            android:paddingStart="20dp"
+            android:paddingTop="14dp"
+            android:paddingEnd="20dp"
+            android:paddingBottom="20dp">
+
+            <TextView
+                android:id="@+id/ar_price_status"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:text="💴 金額: 認識待ち..."
+                android:textColor="#AAFFFFFF"
+                android:textSize="20sp"
+                android:textStyle="bold" />
+
+            <TextView
+                android:id="@+id/ar_volume_status"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="8dp"
+                android:text="⚖️ 容量: 認識待ち..."
+                android:textColor="#AAFFFFFF"
+                android:textSize="20sp"
+                android:textStyle="bold" />
+
+            <TextView
+                android:id="@+id/ar_hint_text"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="10dp"
+                android:text="値札やラベルにカメラを向けてください"
+                android:textColor="#88FFFFFF"
+                android:textSize="16sp" />
+
+        </LinearLayout>
+
+        <!-- バナー広告 -->
+        <!--
+            本番ID: ca-app-pub-4924620089567925/9474737552
+            テストID: ca-app-pub-3940256099942544/6300978111
+        -->
+        <com.google.android.gms.ads.AdView
+            android:id="@+id/ar_adView"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_gravity="center_horizontal"
+            ads:adSize="BANNER"
+            ads:adUnitId="ca-app-pub-4924620089567925/9474737552" />
+
+    </LinearLayout>
+
+</FrameLayout>

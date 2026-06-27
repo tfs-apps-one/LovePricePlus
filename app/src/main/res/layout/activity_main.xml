@@ -12,6 +12,7 @@
         android:layout_width="match_parent"
         android:layout_height="match_parent"
         app:layout_constraintTop_toTopOf="parent"
+        android:background="#F0F4F8"
         android:orientation="vertical">
 
         <!--
@@ -217,8 +218,8 @@
                         android:gravity="center|center"
                         />
 
-                    <LinearLayout
-                        android:id="@+id/linearLayout_110_2"
+                    <TextView
+                        android:id="@+id/text_point_title"
                         android:layout_width="match_parent"
                         android:layout_height="0dp"
                         android:layout_weight="1"
@@ -227,34 +228,10 @@
                         android:layout_marginEnd="5dp"
                         android:layout_marginBottom="5dp"
                         app:backgroundTint="@null"
-                        android:background="@drawable/bak_noselect"
-                        android:orientation="vertical">
-
-                        <TextView
-                            android:id="@+id/text_point_title"
-                            android:layout_width="match_parent"
-                            android:layout_height="0dp"
-                            android:layout_weight="6"
-                            android:text="POINT"
-                            app:backgroundTint="@null"
-                            android:textStyle="bold"
-                            android:gravity="center|center"
-                            />
-
-                        <ImageButton
-                            android:id="@+id/img_question"
-                            android:layout_width="match_parent"
-                            android:layout_height="0dp"
-                            android:layout_weight="4"
-                            android:src="@drawable/question"
-                            android:background="@null"
-                            android:onClick="onQuestion"
-                            android:scaleType="fitCenter"
-                            android:gravity="center|center"
-                            android:text = "question button"
-                            />
-
-                    </LinearLayout>
+                        android:text="POINT"
+                        android:textStyle="bold"
+                        android:gravity="center|center"
+                        />
 
                     <Button
                         android:id="@+id/btn_reset_all"
@@ -372,6 +349,50 @@
 
         </LinearLayout>
 
+
+        <!-- AR一発入力ボタン + ヘルプ -->
+        <LinearLayout
+            android:id="@+id/linearLayout_ar"
+            android:layout_width="match_parent"
+            android:layout_height="0dp"
+            android:layout_weight="1"
+            android:layout_marginStart="5dp"
+            android:layout_marginTop="0dp"
+            android:layout_marginEnd="5dp"
+            android:layout_marginBottom="0dp"
+            android:orientation="horizontal">
+
+            <Button
+                android:id="@+id/btn_ar_scan"
+                android:layout_width="0dp"
+                android:layout_height="match_parent"
+                android:layout_weight="1"
+                android:layout_marginEnd="3dp"
+                android:background="@drawable/bak_btn_ar"
+                app:backgroundTint="@null"
+                android:text="📷ARスキャン"
+                android:textStyle="bold"
+                android:textSize="14sp"
+                android:textColor="#C8E6FF"
+                android:letterSpacing="0.03"
+                android:fontFamily="sans-serif-medium"
+                android:onClick="onArMode"
+                tools:ignore="SpeakableTextPresentCheck,TouchTargetSizeCheck" />
+
+            <Button
+                android:id="@+id/btn_help"
+                android:layout_width="65dp"
+                android:layout_height="match_parent"
+                android:background="@drawable/bak_btn_help"
+                app:backgroundTint="@null"
+                android:text=" ? "
+                android:textStyle="bold"
+                android:textSize="20sp"
+                android:textColor="#C8E6FF"
+                android:onClick="onHelpMode"
+                tools:ignore="SpeakableTextPresentCheck,TouchTargetSizeCheck" />
+
+        </LinearLayout>
 
         <LinearLayout
             android:id="@+id/linearLayout_20"
@@ -557,7 +578,7 @@
                         android:background="@drawable/bak_btn_4"
                         app:backgroundTint="@null"
                         android:textSize="20dp"
-                        android:textColor="#555555"
+                        android:textColor="#FFFFFF"
                         tools:ignore="SpeakableTextPresentCheck,TouchTargetSizeCheck" />
 
                 </LinearLayout>
@@ -640,7 +661,7 @@
                         android:background="@drawable/bak_btn_4"
                         app:backgroundTint="@null"
                         android:textSize="20dp"
-                        android:textColor="#555555"
+                        android:textColor="#FFFFFF"
                         tools:ignore="SpeakableTextPresentCheck,TouchTargetSizeCheck" />
 
                 </LinearLayout>
@@ -717,7 +738,7 @@
                         android:layout_marginEnd="5dp"
                         android:layout_marginBottom="5dp"
                         android:layout_weight="1"
-                        android:text="✖️"
+                        android:text="⌫"
                         android:onClick="onNumDelete"
                         android:textStyle="bold"
                         android:background="@drawable/bak_btn_6"
